@@ -1,5 +1,7 @@
+using NUnit.Framework;
 using Pom.Movement;
 using Pom.Navigation;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,22 +11,19 @@ namespace Pom.Control
     {
 
         Mover mover => GetComponent<Mover>();
-
-        private void Start()
-        {
-                Debug.Log($"Grid system: {GridSystem.Instance.name}");
-        }
+        PathFinder pathFinder => GetComponent<PathFinder>();
 
         private void Update()
         {
             if (Mouse.current.leftButton.wasPressedThisFrame)
             {
                 Vector2 worldMousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-                Vector2 gridPosition = GridSystem.Instance.GetGridPosition(worldMousePosition);
+                Vector2 mouseGridPosition = GridSystem.Instance.GetGridPosition(worldMousePosition);
+                Vector2 currentGridPosition = GridSystem.Instance.GetGridPosition(transform.position);
 
-                Debug.Log("Attempting to move to " + gridPosition);
+                List<PathNode> path = pathFinder.GetPath(currentGridPosition, mouseGridPosition);
 
-                mover.SetDestination(gridPosition);
+                StartCoroutine(mover.MoveAlongPath(path));
             }
         }
     }

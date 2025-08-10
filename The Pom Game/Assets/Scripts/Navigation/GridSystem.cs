@@ -18,7 +18,9 @@ namespace Pom.Navigation
 
         static GridSystem _instance;
 
-        [SerializeField] int width, height;
+        [field: SerializeField] public int Width { get; private set; }
+        [field: SerializeField] public int Height { get; private set; }
+
         [field: SerializeField] public float CellSize { get; private set; }
 
         private void Awake()
@@ -32,27 +34,6 @@ namespace Pom.Navigation
                 _instance = this;
             }
         }
-
-        //Vector2[,] cellPositions;
-
-        //private void Start()
-        //{
-        //    InitiallizeGrid();
-        //}
-
-        //void InitiallizeGrid()
-        //{
-        //    cellPositions = new Vector2[width, height];
-
-        //    for(int x = 0; x < width; x++)
-        //    {
-        //        for (int y = 0; y < height; y++)
-        //        {
-        //            cellPositions[x,y] = new Vector2 (x * cellSize, y * cellSize);
-        //        }
-        //    }
-        //}
-
 
         public Vector2 GetGridPosition(Vector2 worldPosition)
         {

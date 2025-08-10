@@ -1,3 +1,8 @@
+using NUnit.Framework;
+using Pom.Navigation;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Pom.Movement
@@ -8,30 +13,27 @@ namespace Pom.Movement
 
         [SerializeField] float moveSpeed;
 
-        Vector2 destination;
-
-        private void Awake()
+        public IEnumerator MoveAlongPath(List<PathNode> path)
         {
-            destination = transform.position;
+            foreach (PathNode pathNode in path)
+            {
+                yield return MoveToNewDestination(pathNode.Position);
+            }
         }
 
-        private void Update()
+        public IEnumerator MoveToNewDestination(Vector2 destination)
         {
-            if (Vector2.Distance(transform.position, destination) <= MINIMUM_STOPPING_DISTANCE)
-            { 
-                transform.position = destination;
-                return; 
+            while (Vector2.Distance(transform.position, destination) > MINIMUM_STOPPING_DISTANCE)
+            {
+                Vector2 direction = (destination - (Vector2)transform.position).normalized;
+                Vector2 movement = direction * moveSpeed * Time.deltaTime;
+
+                transform.Translate(movement);
+
+                yield return null;
             }
 
-            Vector2 direction = (destination - (Vector2)transform.position).normalized;
-            Vector2 movement = direction * moveSpeed * Time.deltaTime;
-
-            transform.Translate(movement);
-        }
-
-        public void SetDestination(Vector2 destination)
-        {
-            this.destination = destination;
+            transform.position = destination;
         }
     }
 }
