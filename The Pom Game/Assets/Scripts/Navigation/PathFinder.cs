@@ -6,32 +6,13 @@ namespace Pom.Navigation
 {
     public class PathFinder : MonoBehaviour
     {
-        [SerializeField] LayerMask obstacleLayerMask;
-        [SerializeField] PathNodeDebugObject pathNodeDebugObjectPrefab;
-
-        Dictionary<Vector2, PathNode> navDict;
-
-        private void Start()
+        public List<PathNode> GetPath(Vector2 startingPosition, Vector2 endingPosition, int maximumDistance)
         {
-            BuildNavDict();
-        }
+            Dictionary<Vector2, PathNode> navDict = GridSystem.Instance.NavDict;
 
-        void BuildNavDict()
-        {
-            navDict = new Dictionary<Vector2, PathNode>();
+            if (navDict[startingPosition].GetDistanceFromPoint(endingPosition) > maximumDistance) return null;
+            if (!navDict[endingPosition].IsWalkable()) return null;
 
-            for (int x = 0; x < GridSystem.Instance.Width; x++)
-            {
-                for (int y = 0; y < GridSystem.Instance.Height; y++)
-                {
-                    Vector2 nodePosition = new Vector2(x, y);
-                    navDict[nodePosition] = new PathNode(nodePosition, obstacleLayerMask);
-                }
-            }
-        }
-
-        public List<PathNode> GetPath(Vector2 startingPosition, Vector2 endingPosition)
-        {
             List<PathNode> openList = new List<PathNode>();
             List<PathNode> closedList = new List<PathNode>();
 
@@ -55,7 +36,7 @@ namespace Pom.Navigation
                 openList.Remove(currentNode);
                 closedList.Add(currentNode);
 
-                foreach (PathNode neighborNode in GetNeighborNodes(currentNode))
+                foreach (PathNode neighborNode in GridSystem.Instance.GetNeighborNodes(currentNode))
                 {
                     if (neighborNode == null) continue;
                     if (closedList.Contains(neighborNode)) continue;
@@ -89,20 +70,6 @@ namespace Pom.Navigation
             }
 
             return lowestScoringNode;
-        }
-
-
-        List<PathNode> GetNeighborNodes(PathNode currentNode)
-        {
-            List<PathNode> resultList = new List<PathNode>
-            {
-                navDict[new Vector2(currentNode.Position.x + 1, currentNode.Position.y)],
-                navDict[new Vector2(currentNode.Position.x - 1, currentNode.Position.y)],
-                navDict[new Vector2(currentNode.Position.x, currentNode.Position.y + 1)],
-                navDict[new Vector2(currentNode.Position.x, currentNode.Position.y - 1)]
-            };
-
-            return resultList;
         }
 
         private List<PathNode> GenerateFinalPath(PathNode endNode)

@@ -10,13 +10,14 @@ namespace Pom.Navigation
         LayerMask obstacleLayerMask;
         PathNode previousNode;
         float fScore = Mathf.Infinity;
-        PathNodeDebugObject pathNodeDebugObject;
+        GameObject selectableIndicator;
  
 
-        public PathNode(Vector2 position, LayerMask obstacleLayerMask)
+        public PathNode(Vector2 position, LayerMask obstacleLayerMask, GameObject selectableIndicator)
         {
             Position = position;
             this.obstacleLayerMask = obstacleLayerMask;
+            this.selectableIndicator = selectableIndicator;
         }
 
         public void Reset()
@@ -54,19 +55,14 @@ namespace Pom.Navigation
             this.previousNode = previousNode;
         }
 
-        public void SetPathNodeDebugObject(PathNodeDebugObject pathNodeDebugObject)
-        {
-            this.pathNodeDebugObject = pathNodeDebugObject;
-        }
-
         public PathNode GetPreviousNode()
         {
             return previousNode;
         }
 
-        public PathNodeDebugObject GetPathNodeDebugObject()
+        public void ToggleSelectableIndicator(bool toggle)
         {
-            return pathNodeDebugObject;
+            selectableIndicator.SetActive(toggle);
         }
     }
 }

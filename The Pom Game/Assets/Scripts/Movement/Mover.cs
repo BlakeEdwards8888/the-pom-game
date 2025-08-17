@@ -11,6 +11,8 @@ namespace Pom.Movement
     {
         const float MINIMUM_STOPPING_DISTANCE = 0.1f;
 
+        [field: SerializeField] public int MaximumDistance;
+
         [SerializeField] float moveSpeed;
 
         public IEnumerator MoveAlongPath(List<PathNode> path)
