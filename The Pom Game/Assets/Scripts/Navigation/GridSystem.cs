@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Drawing;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Pom.Navigation
 {
@@ -98,6 +100,16 @@ namespace Pom.Navigation
             };
 
             return resultList;
+        }
+
+        public static float GetDistance(Vector2 pointA, Vector2 pointB)
+        {
+            Vector2 gridDistance = pointA - pointB;
+
+            float xDistance = Mathf.Abs(gridDistance.x);
+            float yDistance = Mathf.Abs(gridDistance.y);
+
+            return xDistance + yDistance;
         }
     }
 }

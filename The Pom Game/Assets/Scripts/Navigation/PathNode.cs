@@ -5,11 +5,14 @@ namespace Pom.Navigation
 {
     public class PathNode
     {
+        const float CIRCLE_CAST_RADIUS = 0.2f;
+        const float CIRCLE_CAST_DISTANCE = 0.1f;
+
         public Vector2 Position { get; private set; }
 
         LayerMask obstacleLayerMask;
         PathNode previousNode;
-        float fScore = Mathf.Infinity;
+        //float fScore = Mathf.Infinity;
         GameObject selectableIndicator;
  
 
@@ -22,32 +25,18 @@ namespace Pom.Navigation
 
         public void Reset()
         {
-            fScore = Mathf.Infinity;
+            //fScore = Mathf.Infinity;
             previousNode = null;
-        }
-
-        public float GetDistanceFromPoint(Vector2 point)
-        {
-            Vector2 gridDistance = point - Position;
-
-            float xScore = Mathf.Abs(gridDistance.x);
-            float yScore = Mathf.Abs(gridDistance.y);
-
-            return xScore + yScore;
         }
 
         public float GetScore(Vector2 startingPosition, Vector2 endingPosition)
         {
-            if (fScore != Mathf.Infinity) return fScore;
-
-            fScore = GetDistanceFromPoint(startingPosition) + GetDistanceFromPoint(endingPosition);
-
-            return fScore;
+            return GridSystem.GetDistance(startingPosition, Position) + GridSystem.GetDistance(endingPosition, Position);
         }
 
         public bool IsWalkable()
         {
-            return !Physics.Raycast(Position, Vector3.back, 1, obstacleLayerMask);
+            return !Physics2D.CircleCast(Position, CIRCLE_CAST_RADIUS, Vector2.up, CIRCLE_CAST_DISTANCE, obstacleLayerMask);
         }
 
         public void SetPreviousNode(PathNode previousNode)
@@ -58,6 +47,23 @@ namespace Pom.Navigation
         public PathNode GetPreviousNode()
         {
             return previousNode;
+        }
+
+        public bool TryGetOccupyingEntity<T>(out T entity)
+        {
+            entity = default;
+            RaycastHit2D[] hits = Physics2D.CircleCastAll(Position, CIRCLE_CAST_RADIUS, Vector2.up);
+
+            foreach (RaycastHit2D hit in hits)
+            {
+                if(hit.collider.TryGetComponent(out T component))
+                {
+                    entity = component;
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public void ToggleSelectableIndicator(bool toggle)

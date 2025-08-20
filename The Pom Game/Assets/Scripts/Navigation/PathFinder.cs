@@ -6,11 +6,17 @@ namespace Pom.Navigation
 {
     public class PathFinder : MonoBehaviour
     {
-        public List<PathNode> GetPath(Vector2 startingPosition, Vector2 endingPosition, int maximumDistance)
+        public enum RangeOverflowMode
+        {
+            Cancel,
+            Truncate
+        }
+
+        public List<PathNode> GetPath(Vector2 startingPosition, Vector2 endingPosition, int range, RangeOverflowMode rangeOverflowMode)
         {
             Dictionary<Vector2, PathNode> navDict = GridSystem.Instance.NavDict;
 
-            if (navDict[startingPosition].GetDistanceFromPoint(endingPosition) > maximumDistance) return null;
+            if (rangeOverflowMode == RangeOverflowMode.Cancel && GridSystem.GetDistance(startingPosition, endingPosition) > range) return null;
             if (!navDict[endingPosition].IsWalkable()) return null;
 
             List<PathNode> openList = new List<PathNode>();
@@ -30,7 +36,7 @@ namespace Pom.Navigation
                 if (currentNode.Position == navDict[endingPosition].Position)
                 {
                     //end of path reached
-                    return GenerateFinalPath(navDict[endingPosition]);
+                    return GenerateFinalPath(navDict[endingPosition], range, rangeOverflowMode);
                 }
 
                 openList.Remove(currentNode);
@@ -55,7 +61,7 @@ namespace Pom.Navigation
             return null;
         }
 
-        private PathNode GetLowestScoringNode(List<PathNode> sampleList, Vector2 startingPosition, Vector2 endingPosition)
+        public PathNode GetLowestScoringNode(List<PathNode> sampleList, Vector2 startingPosition, Vector2 endingPosition)
     {
             if (sampleList.Count == 1) return sampleList[0];
 
@@ -72,7 +78,7 @@ namespace Pom.Navigation
             return lowestScoringNode;
         }
 
-        private List<PathNode> GenerateFinalPath(PathNode endNode)
+        private List<PathNode> GenerateFinalPath(PathNode endNode, int range, RangeOverflowMode rangeOverflowMode)
         {
             List<PathNode> pathNodeList = new List<PathNode>{endNode};
 
@@ -85,6 +91,11 @@ namespace Pom.Navigation
             }
 
             pathNodeList.Reverse();
+
+            if(rangeOverflowMode == RangeOverflowMode.Truncate && pathNodeList.Count > range)
+            {
+                pathNodeList.RemoveRange(range + 1, pathNodeList.Count - (range + 1));
+            }
 
             return pathNodeList;
         }
