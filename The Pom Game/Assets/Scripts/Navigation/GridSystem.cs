@@ -81,26 +81,42 @@ namespace Pom.Navigation
             }
         }
 
+        public bool TryGetGridPosition(Vector2 worldPosition, out Vector2 gridPosition)
+        {
+            gridPosition = GetGridPosition(worldPosition);
+
+            if(gridPosition.x >= Width || gridPosition.y >= Height
+                || gridPosition.x < 0 || gridPosition.y < 0) return false;
+
+            return true;
+        }
+
         public Vector2 GetGridPosition(Vector2 worldPosition)
         {
-            Vector2 gridPosition = new Vector2(Mathf.RoundToInt(worldPosition.x) / CellSize,
+            return new Vector2(Mathf.RoundToInt(worldPosition.x) / CellSize,
                 Mathf.RoundToInt(worldPosition.y) / CellSize);
-
-            gridPosition.x = Mathf.Clamp(gridPosition.x, 0, Width - 1);
-            gridPosition.y = Mathf.Clamp(gridPosition.y, 0, Height - 1);
-
-            return gridPosition;
         }
 
         public List<PathNode> GetNeighborNodes(PathNode currentNode)
         {
-            List<PathNode> resultList = new List<PathNode>
+            List<PathNode> resultList = new List<PathNode>();
+
+            if(TryGetGridPosition(new Vector2(currentNode.Position.x + CellSize, currentNode.Position.y), out Vector2 rightPosition))
             {
-                NavDict[GetGridPosition(new Vector2(currentNode.Position.x + 1, currentNode.Position.y))],
-                NavDict[GetGridPosition(new Vector2(currentNode.Position.x - 1, currentNode.Position.y))],
-                NavDict[GetGridPosition(new Vector2(currentNode.Position.x, currentNode.Position.y + 1))],
-                NavDict[GetGridPosition(new Vector2(currentNode.Position.x, currentNode.Position.y - 1))]
-            };
+                resultList.Add(NavDict[rightPosition]);
+            }
+            if (TryGetGridPosition(new Vector2(currentNode.Position.x - CellSize, currentNode.Position.y), out Vector2 leftPosition))
+            {
+                resultList.Add(NavDict[leftPosition]);
+            }
+            if (TryGetGridPosition(new Vector2(currentNode.Position.x, currentNode.Position.y + CellSize), out Vector2 topPosition))
+            {
+                resultList.Add(NavDict[topPosition]);
+            }
+            if (TryGetGridPosition(new Vector2(currentNode.Position.x, currentNode.Position.y - CellSize), out Vector2 bottomPosition))
+            {
+                resultList.Add(NavDict[bottomPosition]);
+            }
 
             return resultList;
         }

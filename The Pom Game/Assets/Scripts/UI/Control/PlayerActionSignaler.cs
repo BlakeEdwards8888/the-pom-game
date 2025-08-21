@@ -9,5 +9,10 @@ namespace Pom.UI.Control
         {
             PlayerController.Instance.SwitchState(actionButton.state);
         }
+
+        public void ClearActiveUnit()
+        {
+            PlayerController.Instance.ClearActiveUnit();
+        }
     }
 }

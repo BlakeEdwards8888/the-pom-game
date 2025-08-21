@@ -19,7 +19,6 @@ namespace Pom.Navigation
             if (!navDict[endingPosition].IsWalkable()) return null;
             if (navDict[endingPosition].TryGetOccupyingEntity(out Health health))
             {
-                Debug.Log($"Found entity with health: {health.name} position: {endingPosition}");
                 return null;
             }
 

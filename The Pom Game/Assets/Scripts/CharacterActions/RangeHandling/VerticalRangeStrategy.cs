@@ -15,17 +15,22 @@ namespace Pom.CharacterActions.RangeHandling
             for (int i = DeadZone + 1; i <= Range + DeadZone; i++)
             {
                 float step = i * GridSystem.Instance.CellSize;
-                Vector2 bottomPosition = GridSystem.Instance.GetGridPosition(new Vector2(startingGridPosition.x, startingGridPosition.y - step));
-                Vector2 topPosition = GridSystem.Instance.GetGridPosition(new Vector2(startingGridPosition.x, startingGridPosition.y + step));
 
-                PathNode bottomNode = GridSystem.Instance.NavDict[bottomPosition];
-                PathNode topNode = GridSystem.Instance.NavDict[topPosition];
+                if (GridSystem.Instance.TryGetGridPosition(new Vector2(startingGridPosition.x, startingGridPosition.y - step), out Vector2 bottomPosition))
+                {
+                    PathNode bottomNode = GridSystem.Instance.NavDict[bottomPosition];
 
-                if(condition != null && condition(bottomNode))
-                result.Add(bottomNode);
+                    if (condition != null && condition(bottomNode))
+                        result.Add(bottomNode);
+                }
 
-                if(condition != null && condition(topNode))
-                result.Add(topNode);
+                if (GridSystem.Instance.TryGetGridPosition(new Vector2(startingGridPosition.x, startingGridPosition.y + step), out Vector2 topPosition))
+                {
+                    PathNode topNode = GridSystem.Instance.NavDict[topPosition];
+
+                    if (condition != null && condition(topNode))
+                        result.Add(topNode);
+                }
             }
 
             return result;
