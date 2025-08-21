@@ -4,22 +4,22 @@ namespace Pom.Attributes
 {
     public class Health : MonoBehaviour
     {
-        [SerializeField] int startingHealth;
+        [field: SerializeField] public int StartingHealth { get; private set; }
 
-        int currentHealth;
+        public int CurrentHealth { get; private set; }
 
         private void Start()
         {
-            currentHealth = startingHealth;
+            CurrentHealth = StartingHealth;
         }
 
         public void TakeDamage(int damage)
         {
-            currentHealth = Mathf.Max(currentHealth - damage, 0);
+            CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
 
-            Debug.Log($"{gameObject.name} has {currentHealth} health remaining");
+            Debug.Log($"{gameObject.name} has {CurrentHealth} health remaining");
 
-            if(currentHealth == 0)
+            if(CurrentHealth == 0)
             {
                 Destroy(gameObject);
             }

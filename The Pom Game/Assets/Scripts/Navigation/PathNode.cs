@@ -12,7 +12,6 @@ namespace Pom.Navigation
 
         LayerMask obstacleLayerMask;
         PathNode previousNode;
-        //float fScore = Mathf.Infinity;
         GameObject selectableIndicator;
  
 
@@ -25,7 +24,6 @@ namespace Pom.Navigation
 
         public void Reset()
         {
-            //fScore = Mathf.Infinity;
             previousNode = null;
         }
 
@@ -52,7 +50,7 @@ namespace Pom.Navigation
         public bool TryGetOccupyingEntity<T>(out T entity)
         {
             entity = default;
-            RaycastHit2D[] hits = Physics2D.CircleCastAll(Position, CIRCLE_CAST_RADIUS, Vector2.up);
+            RaycastHit2D[] hits = Physics2D.CircleCastAll(Position, CIRCLE_CAST_RADIUS, Vector2.zero);
 
             foreach (RaycastHit2D hit in hits)
             {

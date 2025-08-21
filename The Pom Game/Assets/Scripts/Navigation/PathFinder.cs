@@ -1,4 +1,4 @@
-using System.Collections;
+using Pom.Attributes;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,8 +16,12 @@ namespace Pom.Navigation
         {
             Dictionary<Vector2, PathNode> navDict = GridSystem.Instance.NavDict;
 
-            if (rangeOverflowMode == RangeOverflowMode.Cancel && GridSystem.GetDistance(startingPosition, endingPosition) > range) return null;
             if (!navDict[endingPosition].IsWalkable()) return null;
+            if (navDict[endingPosition].TryGetOccupyingEntity(out Health health))
+            {
+                Debug.Log($"Found entity with health: {health.name} position: {endingPosition}");
+                return null;
+            }
 
             List<PathNode> openList = new List<PathNode>();
             List<PathNode> closedList = new List<PathNode>();
@@ -92,12 +96,18 @@ namespace Pom.Navigation
 
             pathNodeList.Reverse();
 
-            if(rangeOverflowMode == RangeOverflowMode.Truncate && pathNodeList.Count > range)
+            if (pathNodeList.Count > range + 1)
             {
-                pathNodeList.RemoveRange(range + 1, pathNodeList.Count - (range + 1));
+                switch (rangeOverflowMode) {
+                    case RangeOverflowMode.Truncate:
+                        pathNodeList.RemoveRange(range + 1, pathNodeList.Count - (range + 1));
+                        break;
+                    case RangeOverflowMode.Cancel:
+                        return null;
+            }
             }
 
-            return pathNodeList;
+                return pathNodeList;
         }
     }
 }

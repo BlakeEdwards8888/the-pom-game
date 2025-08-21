@@ -24,10 +24,7 @@ namespace Pom.Navigation
 
         static GridSystem _instance;
 
-        [field: SerializeField] public int Width { get; private set; }
-        [field: SerializeField] public int Height { get; private set; }
-        [field: SerializeField] public float CellSize { get; private set; }
-        public Dictionary<Vector2, PathNode> NavDict 
+        public Dictionary<Vector2, PathNode> NavDict
         {
             get
             {
@@ -35,13 +32,19 @@ namespace Pom.Navigation
 
                 return _navDict;
             }
-            private set { } 
+            private set { }
         }
 
         Dictionary<Vector2, PathNode> _navDict;
 
+        [field: SerializeField] public int Width { get; private set; }
+        [field: SerializeField] public int Height { get; private set; }
+        [field: SerializeField] public float CellSize { get; private set; }
+        [field: SerializeField] public LayerMask ObstacleLayerMask { get; private set; }
 
-        [SerializeField] LayerMask obstacleLayerMask;
+
+
+
         [SerializeField] GameObject nodeSelectableIndicatorPrefab;
 
 
@@ -73,7 +76,7 @@ namespace Pom.Navigation
                     Vector2 nodePosition = new Vector2(x * CellSize, y * CellSize);
                     GameObject nodeSelectableIndicator = Instantiate(nodeSelectableIndicatorPrefab, nodePosition, Quaternion.identity);
                     nodeSelectableIndicator.SetActive(false);
-                    _navDict[nodePosition] = new PathNode(nodePosition, obstacleLayerMask, nodeSelectableIndicator);
+                    _navDict[nodePosition] = new PathNode(nodePosition, ObstacleLayerMask, nodeSelectableIndicator);
                 }
             }
         }
