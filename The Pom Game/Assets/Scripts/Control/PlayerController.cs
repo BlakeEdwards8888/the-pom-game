@@ -4,11 +4,10 @@ using Pom.Units;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.LowLevel;
 
 namespace Pom.Control
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : Controller
     {
         public enum PlayerState
         {
@@ -36,6 +35,7 @@ namespace Pom.Control
         PlayerState currentState = PlayerState.Idle;
 
         public event Action<Unit> onUnitSelected;
+        public event Action onActiveUnitAction;
 
         private void Awake()
         {
@@ -84,15 +84,23 @@ namespace Pom.Control
         {
             if (Mouse.current.leftButton.wasPressedThisFrame)
             {
-                activeUnit.MoveTo(GetMouseGridPosition());
+                if (activeUnit.TryMoveTo(GetMouseGridPosition()))
+                {
+                    SwitchState(PlayerState.Idle);
+                    onActiveUnitAction?.Invoke();
+                }
             }
         }
 
         void HandleAttack()
         {
-            if (Mouse.current.rightButton.wasPressedThisFrame)
+            if (Mouse.current.leftButton.wasPressedThisFrame)
             {
-                activeUnit.Attack(GetMouseGridPosition());
+                if (activeUnit.TryAttack(GetMouseGridPosition()))
+                {
+                    SwitchState(PlayerState.Idle);
+                    onActiveUnitAction?.Invoke();
+                }
             }
         }
 
@@ -118,7 +126,7 @@ namespace Pom.Control
             switch (newState)
             {
                 case PlayerState.Idle:
-                    ClearActiveUnit();
+                    rangePresenter.ClearSelectableNodes();
                     break;
                 case PlayerState.Move:
                     rangePresenter.ShowSelectableNodes(activeUnit.Mover.GetNodesInRange(activeUnitGridPosition, (node) => { return node.IsWalkable(); }));
@@ -139,8 +147,6 @@ namespace Pom.Control
 
         void HandleExitState()
         {
-            rangePresenter.ClearSelectableNodes();
-
             switch (currentState)
             {
                 case PlayerState.Idle:
@@ -152,10 +158,29 @@ namespace Pom.Control
             }
         }
 
+        public bool CanUseState(PlayerState state)
+        {
+            switch (state)
+            {
+                case PlayerState.Move:
+                    return activeUnit.CanMove;
+                case PlayerState.Attack:
+                    return activeUnit.CanAttack;
+            }
+
+            return true;
+        }
+
         private Vector2 GetMouseGridPosition()
         {
             Vector2 worldMousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-            return GridSystem.Instance.GetGridPosition(worldMousePosition);
+            GridSystem.Instance.TryGetGridPosition(worldMousePosition, out Vector2 mouseGridPosition);
+            return mouseGridPosition;
+        }
+
+        public override void InitiateTurn()
+        {
+            base.InitiateTurn();
         }
     }
 }

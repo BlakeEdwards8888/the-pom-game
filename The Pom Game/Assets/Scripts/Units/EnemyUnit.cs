@@ -1,11 +1,9 @@
-using NUnit.Framework;
 using Pom.Alliances;
 using Pom.Attributes;
 using Pom.Navigation;
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Pom.Units
 {
@@ -16,32 +14,18 @@ namespace Pom.Units
         Vector2 currentGridPosition;
         Vector2 targetGridPosition;
 
-        public void Update()
+        public IEnumerator TakeTurn()
         {
-            if (Keyboard.current.qKey.wasPressedThisFrame)
-            {
-                TakeTurn();
-            }
-
-            if (Keyboard.current.wKey.wasPressedThisFrame)
-            {
-                currentGridPosition = GridSystem.Instance.GetGridPosition(transform.position);
-
-                //rangePresenter.ShowSelectableNodes(mover.GetNodesInRange(currentGridPosition));
-            }
-        }
-
-        private void TakeTurn()
-        {
-            //rangePresenter.ClearSelectableNodes();
             currentGridPosition = GridSystem.Instance.GetGridPosition(transform.position);
 
             SetTarget();
 
-            HandleMovementAction();
+            yield return HandleMovementAction();
+
+            HandleAttackAction();
         }
 
-        private void HandleMovementAction()
+        private IEnumerator HandleMovementAction()
         {
             List<PathNode> possibleEndingNodes = Attacker.GetNodesInRange(targetGridPosition);
 
@@ -49,13 +33,22 @@ namespace Pom.Units
 
             if (targetEndingNode == null)
             {
-                Debug.Log("No possible walkable node");
-                return;
+                Debug.Log($"{gameObject.name}: No possible walkable node");
+                yield break;
             }
 
             List<PathNode> path = pathFinder.GetPath(currentGridPosition, targetEndingNode.Position, Mover.GetRange(), PathFinder.RangeOverflowMode.Truncate);
 
-            StartCoroutine(Mover.MoveAlongPath(path, HandleAttackAction));
+            yield return Mover.MoveAlongPath(path);
+        }
+
+        void HandleAttackAction()
+        {
+            currentGridPosition = GridSystem.Instance.GetGridPosition(transform.position);
+
+            if (!Attacker.IsTargetInRange(currentGridPosition, targetGridPosition)) return;
+
+            Attacker.Attack(target);
         }
 
         private void SetTarget()
@@ -65,7 +58,7 @@ namespace Pom.Units
 
             foreach(Alliance alliance in FindObjectsByType<Alliance>(FindObjectsSortMode.None))
             {
-                if (alliance.AlliedFaction == this.alliance.AlliedFaction) continue;
+                if (alliance.AlliedFaction == Alliance.AlliedFaction) continue;
 
                 Vector2 allianceGridPosition = GridSystem.Instance.GetGridPosition(alliance.transform.position);
                 float distance = GridSystem.GetDistance(currentGridPosition, allianceGridPosition);
@@ -99,15 +92,5 @@ namespace Pom.Units
 
             return closestNode;
         }
-
-        void HandleAttackAction()
-        {
-            currentGridPosition = GridSystem.Instance.GetGridPosition(transform.position);
-
-            if (!Attacker.IsTargetInRange(currentGridPosition, targetGridPosition)) return;
-
-            Attacker.Attack(target);
-        }
-
     }
 }

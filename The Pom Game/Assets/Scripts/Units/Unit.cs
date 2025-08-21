@@ -1,10 +1,10 @@
 using Pom.Alliances;
 using Pom.Attributes;
-using Pom.Navigation.Presentation;
 using Pom.Navigation;
 using UnityEngine;
 using Pom.CharacterActions.Movement;
 using Pom.CharacterActions.Combat;
+using System.Collections.Generic;
 
 namespace Pom.Units
 {
@@ -16,7 +16,7 @@ namespace Pom.Units
 
         [field: SerializeField] public Mover Mover { get; private set; }
         [field: SerializeField] public Attacker Attacker { get; private set; }
+        [field: SerializeField] public Alliance Alliance { get; private set; }
         protected PathFinder pathFinder => GetComponent<PathFinder>();
-        protected Alliance alliance => GetComponent<Alliance>();
     }
 }
