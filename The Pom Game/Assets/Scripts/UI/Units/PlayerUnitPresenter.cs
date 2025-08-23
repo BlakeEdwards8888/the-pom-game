@@ -11,6 +11,8 @@ namespace Pom.UI.Units
         [SerializeField] TMP_Text namePresenter;
         [SerializeField] TMP_Text healthPresenter;
 
+        Unit unit;
+
         private void OnEnable()
         {
             PlayerController.Instance.onUnitSelected += HandleUnitSelected;
@@ -18,15 +20,25 @@ namespace Pom.UI.Units
 
         private void HandleUnitSelected(Unit unit)
         {
+            if(unit != null) unit.Health.onTakeDamage -= UpdateHealthText;
+
+            this.unit = unit;
             namePresenter.text = unit.DisplayName;
-            healthPresenter.text = $"health: {unit.Health.CurrentHealth}/{unit.Health.StartingHealth}";
+            unit.Health.onTakeDamage += UpdateHealthText;
+            UpdateHealthText();
 
             GetComponent<UIToggler>().ToggleUI(true);
+        }
+
+        private void UpdateHealthText()
+        {
+            healthPresenter.text = $"health: {unit.Health.CurrentHealth}/{unit.Health.StartingHealth}";
         }
 
         private void OnDisable()
         {
             PlayerController.Instance.onUnitSelected -= HandleUnitSelected;
+            unit.Health.onTakeDamage -= UpdateHealthText;
         }
     }
 }
