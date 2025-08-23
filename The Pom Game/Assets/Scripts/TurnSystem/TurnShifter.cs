@@ -23,11 +23,16 @@ namespace Pom.TurnSystem
 
         static TurnShifter _instance;
 
+        public int CurrentRound { get; private set; } = 1;
+
+        [field: SerializeField] public int MaxRounds { get; private set; }
         [SerializeField] List<Controller> controllers = new List<Controller>();
 
         int turnIndex;
 
         public event Action<Controller> onTurnShifted;
+        public event Action onFinalRoundComplete;
+        public event Action onRoundIncremented;
 
         private void Awake()
         {
@@ -53,7 +58,15 @@ namespace Pom.TurnSystem
 
             if (turnIndex >= controllers.Count)
             {
+                if (MaxRounds > 0 && CurrentRound == MaxRounds)
+                {
+                    onFinalRoundComplete?.Invoke();
+                    return;
+                }
+
+                CurrentRound++;
                 turnIndex = 0;
+                onRoundIncremented?.Invoke();
             }
 
             controllers[turnIndex].InitiateTurn();
