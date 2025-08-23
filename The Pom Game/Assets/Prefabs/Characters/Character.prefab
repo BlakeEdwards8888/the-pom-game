@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7760587421066335684}
   - component: {fileID: 1198981840000583811}
   - component: {fileID: 541570294616131336}
+  - component: {fileID: 117491418955209965}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -150,6 +151,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <AlliedFaction>k__BackingField: 0
+--- !u!114 &117491418955209965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3253859781954902899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5befa3dce8ead284c988f2d353e98004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pom.Units.Unit
+  <Health>k__BackingField: {fileID: 2397348934352063084}
+  <DisplayName>k__BackingField: Unit McUnitface
+  <Mover>k__BackingField: {fileID: 3668748009972834561}
+  <Attacker>k__BackingField: {fileID: 7760587421066335684}
+  <Alliance>k__BackingField: {fileID: 541570294616131336}
 --- !u!1 &3866663943921534213
 GameObject:
   m_ObjectHideFlags: 0
@@ -202,6 +220,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -223,6 +243,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 100

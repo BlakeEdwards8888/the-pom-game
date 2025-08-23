@@ -12,8 +12,9 @@ namespace Pom.Navigation
             Truncate
         }
 
-        public List<PathNode> GetPath(Vector2 startingPosition, Vector2 endingPosition, int range, RangeOverflowMode rangeOverflowMode)
+        public List<PathNode> GetPath(Vector2 startingPosition, Vector2 endingPosition, int range, RangeOverflowMode rangeOverflowMode, List<PathNode> blacklist = null)
         {
+            if(blacklist == null) blacklist = new List<PathNode>();
             Dictionary<Vector2, PathNode> navDict = GridSystem.Instance.NavDict;
 
             if (!navDict[endingPosition].IsWalkable()) return null;
@@ -23,7 +24,7 @@ namespace Pom.Navigation
             }
 
             List<PathNode> openList = new List<PathNode>();
-            List<PathNode> closedList = new List<PathNode>();
+            List<PathNode> closedList = new List<PathNode>(blacklist);
 
             openList.Add(navDict[startingPosition]);
 
@@ -39,7 +40,21 @@ namespace Pom.Navigation
                 if (currentNode.Position == navDict[endingPosition].Position)
                 {
                     //end of path reached
-                    return GenerateFinalPath(navDict[endingPosition], range, rangeOverflowMode);
+                    List<PathNode> prospectivePath = GenerateFinalPath(navDict[endingPosition], range, rangeOverflowMode);
+
+                    //If the final path ends on a space that contains a unit as a result of
+                    //the range overflow mode, then we have to recalculate the path and ignore that node
+                    //to prevent units from overlapping, but still alowing them to pass through
+                    //each other on their way to their final destination
+                    if (prospectivePath[prospectivePath.Count - 1].TryGetOccupyingEntity(out Health occupyingHealth))
+                    {
+                        blacklist.Add(prospectivePath[prospectivePath.Count - 1]);
+                        return GetPath(startingPosition, endingPosition, range, rangeOverflowMode, blacklist);
+                    }
+                    else
+                    {
+                        return prospectivePath;
+                    }
                 }
 
                 openList.Remove(currentNode);
@@ -97,13 +112,14 @@ namespace Pom.Navigation
 
             if (pathNodeList.Count > range + 1)
             {
-                switch (rangeOverflowMode) {
+                switch (rangeOverflowMode) 
+                {
                     case RangeOverflowMode.Truncate:
                         pathNodeList.RemoveRange(range + 1, pathNodeList.Count - (range + 1));
                         break;
                     case RangeOverflowMode.Cancel:
                         return null;
-            }
+                }
             }
 
                 return pathNodeList;

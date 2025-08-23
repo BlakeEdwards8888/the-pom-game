@@ -2,6 +2,7 @@ using Pom.Navigation;
 using Pom.Navigation.Presentation;
 using Pom.Units;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -31,11 +32,12 @@ namespace Pom.Control
         static PlayerController _instance;
 
         RangePresenter rangePresenter => GetComponent<RangePresenter>();
-        PlayerUnit activeUnit;
+        Unit activeUnit;
         PlayerState currentState = PlayerState.Idle;
 
         public event Action<Unit> onUnitSelected;
         public event Action onActiveUnitAction;
+        public event Action onActiveUnitCleared;
 
         private void Awake()
         {
@@ -68,8 +70,9 @@ namespace Pom.Control
         {
             if (Mouse.current.leftButton.wasPressedThisFrame)
             {
-                if (GridSystem.Instance.NavDict[GetMouseGridPosition()].TryGetOccupyingEntity(out PlayerUnit unit))
+                if (GridSystem.Instance.NavDict[GetMouseGridPosition()].TryGetOccupyingEntity(out Unit unit))
                 {
+                    if (unit.Alliance.AlliedFaction != alliance.AlliedFaction) return false;
                     SwitchState(PlayerState.Idle);
                     activeUnit = unit;
                     onUnitSelected?.Invoke(unit);
@@ -84,8 +87,9 @@ namespace Pom.Control
         {
             if (Mouse.current.leftButton.wasPressedThisFrame)
             {
-                if (activeUnit.TryMoveTo(GetMouseGridPosition()))
+                if (activeUnit.CanMoveTo(GetMouseGridPosition(), out List<PathNode> path, PathFinder.RangeOverflowMode.Cancel))
                 {
+                    StartCoroutine(activeUnit.MoveAlongPath(path));
                     SwitchState(PlayerState.Idle);
                     onActiveUnitAction?.Invoke();
                 }
@@ -107,6 +111,8 @@ namespace Pom.Control
         public void ClearActiveUnit()
         {
             activeUnit = null;
+            SwitchState(PlayerState.Idle);
+            onActiveUnitCleared?.Invoke();
         }
 
         public void SwitchState(PlayerState newState)
@@ -178,9 +184,11 @@ namespace Pom.Control
             return mouseGridPosition;
         }
 
-        public override void InitiateTurn()
+        public override void ExitTurn()
         {
-            base.InitiateTurn();
+            base.ExitTurn();
+
+            SwitchState(PlayerState.Idle);
         }
     }
 }

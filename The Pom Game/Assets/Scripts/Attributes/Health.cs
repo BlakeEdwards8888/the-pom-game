@@ -17,8 +17,6 @@ namespace Pom.Attributes
         {
             CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
 
-            Debug.Log($"{gameObject.name} has {CurrentHealth} health remaining");
-
             if(CurrentHealth == 0)
             {
                 Destroy(gameObject);
