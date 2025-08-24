@@ -27,6 +27,7 @@ namespace Pom.Attributes
             if(CurrentHealth == 0)
             {
                 onDeath?.Invoke();
+                onDeath.RemoveAllListeners();
                 Destroy(gameObject);
             }
         }

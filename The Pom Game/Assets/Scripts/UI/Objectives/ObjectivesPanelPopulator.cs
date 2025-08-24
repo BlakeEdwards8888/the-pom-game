@@ -8,21 +8,13 @@ namespace Pom.UI.Objectives
         [SerializeField] ObjectivesList objectivesList;
         [SerializeField] Transform objectivesPanel;
         [SerializeField] ObjectivePresenter objectivePresenterPrefab;
-        [SerializeField] Color victoryObjectiveCompletionColor;
-        [SerializeField] Color defeatObjectiveCompletionColor;
 
         private void Start()
         {
-            foreach(Objective objective in objectivesList.VictoryObjectives)
+            foreach (Objective objective in objectivesList.Objectives)
             {
-                ObjectivePresenter objectivePresenter = Instantiate(objectivePresenterPrefab, objectivesPanel);
-                objectivePresenter.Setup(objective, victoryObjectiveCompletionColor);
-            }
-
-            foreach (Objective objective in objectivesList.DefeatObjectives)
-            {
-                ObjectivePresenter objectivePresenter = Instantiate(objectivePresenterPrefab, objectivesPanel);
-                objectivePresenter.Setup(objective, defeatObjectiveCompletionColor);
+                ObjectivePresenter objectivePresenter = Instantiate(objectivePresenterPrefab, objectivesPanel.transform);
+                objectivePresenter.Setup(objective);
             }
         }
     }

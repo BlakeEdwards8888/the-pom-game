@@ -12,10 +12,13 @@ namespace Pom.UI.Units
         [SerializeField] TMP_Text healthPresenter;
 
         Unit unit;
+        PlayerController playerController;
 
         private void OnEnable()
         {
-            PlayerController.Instance.onUnitSelected += HandleUnitSelected;
+            playerController = PlayerController.Instance;
+
+            playerController.onUnitSelected += HandleUnitSelected;
         }
 
         private void HandleUnitSelected(Unit unit)
@@ -37,7 +40,7 @@ namespace Pom.UI.Units
 
         private void OnDisable()
         {
-            PlayerController.Instance.onUnitSelected -= HandleUnitSelected;
+            playerController.onUnitSelected -= HandleUnitSelected;
             unit.Health.onTakeDamage -= UpdateHealthText;
         }
     }

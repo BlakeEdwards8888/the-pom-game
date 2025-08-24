@@ -1,5 +1,7 @@
+using Pom.CharacterActions;
 using Pom.Navigation;
 using Pom.Navigation.Presentation;
+using Pom.Objectives;
 using Pom.Units;
 using System;
 using System.Collections.Generic;
@@ -38,6 +40,7 @@ namespace Pom.Control
         public event Action<Unit> onUnitSelected;
         public event Action onActiveUnitAction;
         public event Action onActiveUnitCleared;
+
 
         private void Awake()
         {
@@ -164,6 +167,16 @@ namespace Pom.Control
             }
         }
 
+        private void HandleUnitDeath()
+        {
+            FindControllableUnits();
+
+            if(controllableUnits.Count == 0)
+            {
+                ObjectivesList.Instance.TriggerFailureState();
+            }
+        }
+
         public bool CanUseState(PlayerState state)
         {
             switch (state)
@@ -189,6 +202,19 @@ namespace Pom.Control
             base.ExitTurn();
 
             SwitchState(PlayerState.Idle);
+        }
+
+        protected override void FindControllableUnits()
+        {
+            List<Unit> controllableUnitsCache = new List<Unit>(controllableUnits);
+
+            base.FindControllableUnits();
+
+            foreach (Unit unit in controllableUnits)
+            {
+                if (controllableUnitsCache.Contains(unit)) continue;
+                unit.Health.onDeath.AddListener(HandleUnitDeath);
+            }
         }
     }
 }
