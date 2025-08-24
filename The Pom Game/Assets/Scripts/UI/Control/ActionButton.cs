@@ -11,11 +11,17 @@ namespace Pom.UI.Control
     {
         [field: SerializeField] public PlayerController.PlayerState state;
 
+        PlayerController playerController;
+        TurnShifter turnShifter;
+
         private void OnEnable()
         {
-            PlayerController.Instance.onUnitSelected += HandleUnitSelected;
-            PlayerController.Instance.onActiveUnitAction += SetButtonInteractableState;
-            TurnShifter.Instance.onTurnShifted += HandleTurnShifted;
+            playerController = PlayerController.Instance;
+            turnShifter = TurnShifter.Instance;
+
+            playerController.onUnitSelected += HandleUnitSelected;
+            playerController.onActiveUnitAction += SetButtonInteractableState;
+            turnShifter.onTurnShifted += HandleTurnShifted;
         }
 
         private void SetButtonInteractableState()
@@ -25,7 +31,7 @@ namespace Pom.UI.Control
 
         private bool CalculateInteractableState()
         {
-            if (!PlayerController.Instance.CanUseState(state)) return false;
+            if (!playerController.CanUseState(state)) return false;
             if (TurnShifter.Instance.GetActiveController() != PlayerController.Instance) return false;
 
             return true;
@@ -44,9 +50,9 @@ namespace Pom.UI.Control
 
         private void OnDisable()
         {
-            PlayerController.Instance.onUnitSelected -= HandleUnitSelected;
-            PlayerController.Instance.onActiveUnitAction -= SetButtonInteractableState;
-            TurnShifter.Instance.onTurnShifted -= HandleTurnShifted;
+            playerController.onUnitSelected -= HandleUnitSelected;
+            playerController.onActiveUnitAction -= SetButtonInteractableState;
+            turnShifter.onTurnShifted -= HandleTurnShifted;
         }
     }
 }

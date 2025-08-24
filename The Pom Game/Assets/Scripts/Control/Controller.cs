@@ -23,7 +23,7 @@ namespace Pom.Control
 
         public virtual void ExitTurn(){ }
 
-        protected void FindControllableUnits()
+        protected virtual void FindControllableUnits()
         {
             controllableUnits.Clear();
 
@@ -31,6 +31,7 @@ namespace Pom.Control
 
             foreach (Unit unit in allUnits)
             {
+                if (unit.Health.CurrentHealth == 0) continue;
                 if (unit.Alliance.AlliedFaction == GetComponent<Alliance>().AlliedFaction)
                 {
                     controllableUnits.Add(unit);

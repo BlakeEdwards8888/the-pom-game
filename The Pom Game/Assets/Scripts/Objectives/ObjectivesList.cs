@@ -1,4 +1,5 @@
 using Pom.TurnSystem;
+using Pom.UI;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,78 +8,118 @@ namespace Pom.Objectives
 {
     public class ObjectivesList : MonoBehaviour
     {
-        [field: SerializeField] public List<Objective> VictoryObjectives { get; private set; } = new List<Objective>();
-        [field: SerializeField] public List<Objective> DefeatObjectives { get; private set; } = new List<Objective>();
+        public static ObjectivesList Instance
+        {
+            get
+            {
+                if(_instance == null)
+                    _instance = FindFirstObjectByType<ObjectivesList>();
 
-        Dictionary<Objective, bool> victoryObjectiveState = new Dictionary<Objective, bool>();
-        Dictionary<Objective, bool> defeatObjectiveState = new Dictionary<Objective, bool>();
+                return _instance;
+            }
+            private set { }
+        }
 
-        public event Action<Objective> onObjectiveCompleted;
+        static ObjectivesList _instance;
+
+        [SerializeField] UIToggler victoryScreen;
+        [SerializeField] UIToggler failureScreen;
+
+        [field: SerializeField] public List<Objective> Objectives { get; private set; } = new List<Objective>();
+
+        TurnShifter turnShifter;
+
+        Dictionary<string, Objective> objectiveDict;
+
 
         private void OnEnable()
         {
-            foreach (Objective objective in VictoryObjectives)
-            {
-                victoryObjectiveState[objective] = false;
-            }
+            turnShifter = TurnShifter.Instance;
 
-            foreach (Objective objective in DefeatObjectives)
-            {
-                defeatObjectiveState[objective] = false;
-            }
-
-            TurnShifter.Instance.onFinalRoundComplete += HandleFinalRoundComplete;
+            turnShifter.onFinalRoundComplete += HandleFinalRoundComplete;
         }
 
-        public bool AreAllVictoryObjectivesComplete()
+        private void Awake()
         {
-            foreach (KeyValuePair<Objective, bool> objectiveState in victoryObjectiveState)
+            if(_instance == null)
             {
-                if (!objectiveState.Value) return false;
+                _instance = this;
+            }else if (_instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        private void Start()
+        {
+            BuildObjectiveDict();
+        }
+
+        private void BuildObjectiveDict()
+        {
+            objectiveDict = new Dictionary<string, Objective>();
+
+            foreach (Objective objective in Objectives)
+            {
+                objectiveDict[objective.Tag] = objective;
+            }
+        }
+
+        public bool AreAllMandatoryObjectivesComplete()
+        {
+            foreach (Objective objective in Objectives)
+            {
+                if (!objective.MustBeCompleted) continue;
+                if (objective.State != ObjectiveState.Complete) return false;
             }
 
             return true;
         }
 
-        public void CompleteObjective(Objective objective)
+        public void SetObjectiveState(string tag, ObjectiveState objectiveState)
         {
-            if (victoryObjectiveState.ContainsKey(objective))
+            if (!objectiveDict.ContainsKey(tag))
             {
-                victoryObjectiveState[objective] = true;
-
-                if(AreAllVictoryObjectivesComplete()) Debug.Log("Completed all objectives!");
-            }
-            else if (defeatObjectiveState.ContainsKey(objective))
-            {
-                defeatObjectiveState[objective] = true;
-
-                Debug.Log("You just lost the game");
-            }
-            else
-            {
-                Debug.Log($"No objective in list with description {objective.Description}");
+                Debug.LogError($"No objective with tag {tag} contained in dictionary");
                 return;
             }
 
-            onObjectiveCompleted?.Invoke(objective);
+            objectiveDict[tag].SetState(objectiveState);
         }
 
         private void HandleFinalRoundComplete()
         {
-            if (!AreAllVictoryObjectivesComplete())
+            if (!AreAllMandatoryObjectivesComplete())
             {
-                Debug.Log("You just lost the game");
+                TriggerFailureState();
             }
             else
             {
-                Debug.Log("Completed all objectives!");
+                TriggerVictoryState();
             }
         }
 
+        public void TriggerVictoryState()
+        {
+            victoryScreen.ToggleUI(true);
+        }
+
+        public void TriggerFailureState()
+        {
+            foreach(Objective objective in Objectives)
+            {
+                if(objective.State == ObjectiveState.InProgress)
+                {
+                    objective.SetState(ObjectiveState.Failed);
+                }
+            }
+
+            failureScreen.ToggleUI(true);
+        }
 
         private void OnDisable()
         {
-            TurnShifter.Instance.onFinalRoundComplete -= HandleFinalRoundComplete;
+            turnShifter.onFinalRoundComplete -= HandleFinalRoundComplete;
         }
 
     }
