@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: VerticalPlayerAttackRangeStrategy
   m_EditorClassIdentifier: 
   <Range>k__BackingField: 1
-  <DeadZone>k__BackingField: 1
+  <DeadZone>k__BackingField: 0

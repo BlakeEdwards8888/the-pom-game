@@ -1,10 +1,8 @@
-using Pom.Alliances;
 using Pom.Attributes;
+using Pom.CharacterActions;
 using Pom.Navigation;
 using Pom.TurnSystem;
 using Pom.Units;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Pom.Control
@@ -13,97 +11,80 @@ namespace Pom.Control
     {
         const float DELAY_BETWEEN_ACTIONS = 0.5f;
 
-        IEnumerator TurnCoroutine()
+        int unitIndex;
+        int actionIndex;
+
+        private void StartTurn()
         {
-            foreach (Unit unit in controllableUnits)
-            {
-                Health targetHealth = GetClosestEnemyHealth(unit);
+            unitIndex = 0;
+            actionIndex = 0;
 
-                yield return ExecuteMovementAction(unit, targetHealth);
-
-                HandleAttackAction(unit, targetHealth);
-
-                yield return new WaitForSeconds(DELAY_BETWEEN_ACTIONS);
-            }
-
-            TurnShifter.Instance.ShiftTurns();
+            ExecuteNextAction();
         }
 
-        IEnumerator ExecuteMovementAction(Unit unit, Health targetHealth)
+        void ExecuteNextAction()
         {
-            Vector2 targetPosition = GridSystem.Instance.GetGridPosition(targetHealth.transform.position);
-
-            PathNode targetMovementNode = GetClosestNode(unit, unit.Attacker.GetNodesInRange(targetPosition));
-
-            if (targetMovementNode == null)
+            if(unitIndex >= controllableUnits.Count)
             {
-                Debug.Log($"{unit.name}: No possible walkable node");
-                yield break;
+                TurnShifter.Instance.ShiftTurns();
+                return;
             }
 
-            if (unit.CanMoveTo(targetMovementNode.Position, out List<PathNode> path, PathFinder.RangeOverflowMode.Truncate))
+            Unit currentUnit = controllableUnits[unitIndex];
+
+            Debug.Log($"Executing actions for {currentUnit.DisplayName}");
+
+            if (actionIndex >= currentUnit.Actions.Count)
             {
-                yield return unit.MoveAlongPath(path);
+                IterateUnitIndex();
+                actionIndex = 0;
+                ExecuteNextAction();
+                return;
             }
+
+            ActionExecutor activeAction = currentUnit.Actions[actionIndex];
+
+            Debug.Log($"Using action {activeAction.GetDisplayName()}");
+
+            if(activeAction.AIExecutionStrategy.TryGetTargetPosition(currentUnit, out Vector2 targetPosition, activeAction.RangeStrategy))
+
+            if(currentUnit.Actions[actionIndex].TryExecute(targetPosition, actionArgs,
+                () => {
+                    IterateActionIndex();
+                    ExecuteNextAction(); 
+                }))
+            {
+                    return;
+            }
+
+            IterateActionIndex();
+            ExecuteNextAction();
         }
 
-        void HandleAttackAction(Unit unit, Health targetHealth)
+        void IterateUnitIndex()
         {
-            Vector2 targetPosition = GridSystem.Instance.GetGridPosition(targetHealth.transform.position);
-
-            if (!unit.Attacker.IsTargetInRange(unit.Position, targetPosition)) return;
-
-            unit.Attacker.Attack(targetHealth);
+            unitIndex++;
         }
 
-        Health GetClosestEnemyHealth(Unit unit)
+        void IterateActionIndex()
         {
-            Health closestEnemyHealth = null;
-            float closestTargetDistance = Mathf.Infinity;
-
-            foreach (Health targetHealth in FindObjectsByType<Health>(FindObjectsSortMode.None))
-            {
-                if (targetHealth.GetComponent<Alliance>().AlliedFaction == alliance.AlliedFaction) continue;
-
-                Vector2 healthGridPosition = GridSystem.Instance.GetGridPosition(targetHealth.transform.position);
-                float distance = GridSystem.GetDistance(unit.Position, healthGridPosition);
-
-                if (distance < closestTargetDistance)
-                {
-                    closestEnemyHealth = targetHealth;
-                    closestTargetDistance = distance;
-                }
-            }
-
-            return closestEnemyHealth;
-        }
-
-        private PathNode GetClosestNode(Unit testUnit, List<PathNode> possibleEndingNodes)
-        {
-            PathNode closestNode = null;
-            float closestDistance = Mathf.Infinity;
-
-            for (int i = 0; i < possibleEndingNodes.Count; i++)
-            {
-                if (!possibleEndingNodes[i].IsWalkable()) continue;
-                if (possibleEndingNodes[i].TryGetOccupyingEntity(out Unit unit) && unit != testUnit) continue;
-
-                float distanceToNode = GridSystem.GetDistance(testUnit.Position, possibleEndingNodes[i].Position);
-                if (distanceToNode < closestDistance)
-                {
-                    closestNode = possibleEndingNodes[i];
-                    closestDistance = distanceToNode;
-                }
-            }
-
-            return closestNode;
+            actionIndex++;
         }
 
         public override void InitiateTurn()
         {
             base.InitiateTurn();
 
-            StartCoroutine(TurnCoroutine());
+            StartTurn();
+        }
+
+        public override void SetActiveUnit(Unit unit)
+        {
+            controllableUnits[unitIndex] = unit;
+
+            //Setting actionIndex to -1 here to make sure that when the next action gets executed,
+            //We're starting over with this new unit from zero
+            actionIndex = -1;
         }
     }
 }

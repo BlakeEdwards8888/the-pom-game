@@ -1,7 +1,9 @@
+using Pom.CharacterActions;
 using Pom.Control;
 using Pom.TurnSystem;
 using Pom.Units;
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,19 +11,24 @@ namespace Pom.UI.Control
 {
     public class ActionButton : MonoBehaviour
     {
-        [field: SerializeField] public PlayerController.PlayerState state;
+        [SerializeField] TMP_Text buttonText;
 
         PlayerController playerController;
         TurnShifter turnShifter;
+        ActionExecutor action;
 
-        private void OnEnable()
+        public void Setup(ActionExecutor action)
         {
             playerController = PlayerController.Instance;
             turnShifter = TurnShifter.Instance;
 
             playerController.onUnitSelected += HandleUnitSelected;
-            playerController.onActiveUnitAction += SetButtonInteractableState;
             turnShifter.onTurnShifted += HandleTurnShifted;
+
+            this.action = action;
+            buttonText.text = action.GetDisplayName();
+            SetButtonInteractableState();
+            action.onActionStarted += SetButtonInteractableState;
         }
 
         private void SetButtonInteractableState()
@@ -31,8 +38,8 @@ namespace Pom.UI.Control
 
         private bool CalculateInteractableState()
         {
-            if (!playerController.CanUseState(state)) return false;
-            if (TurnShifter.Instance.GetActiveController() != PlayerController.Instance) return false;
+            if (action.IsUsed) return false;
+            if (turnShifter.GetActiveController() != playerController) return false;
 
             return true;
         }
@@ -47,12 +54,16 @@ namespace Pom.UI.Control
             SetButtonInteractableState();
         }
 
+        public void SetPlayerAction()
+        {
+            playerController.SetActiveAction(action);
+        }
 
         private void OnDisable()
         {
             playerController.onUnitSelected -= HandleUnitSelected;
-            playerController.onActiveUnitAction -= SetButtonInteractableState;
             turnShifter.onTurnShifted -= HandleTurnShifted;
+            action.onActionStarted -= SetButtonInteractableState;
         }
     }
 }

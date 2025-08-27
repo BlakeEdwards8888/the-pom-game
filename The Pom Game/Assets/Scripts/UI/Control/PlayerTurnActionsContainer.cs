@@ -8,9 +8,12 @@ namespace Pom.UI
     {
         UIToggler uiToggler => GetComponent<UIToggler>();
 
+        TurnShifter turnShifter;
+
         private void OnEnable()
         {
-            TurnShifter.Instance.onTurnShifted += HandleTurnShifted;
+            turnShifter = TurnShifter.Instance;
+            turnShifter.onTurnShifted += HandleTurnShifted;
         }
 
         private void Start()
@@ -25,7 +28,7 @@ namespace Pom.UI
 
         private void OnDisable()
         {
-            TurnShifter.Instance.onTurnShifted -= HandleTurnShifted;
+            turnShifter.onTurnShifted -= HandleTurnShifted;
         }
     }
 }

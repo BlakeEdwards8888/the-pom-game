@@ -9,9 +9,12 @@ namespace Pom.UI.TurnSystem
     {
         [SerializeField] TMP_Text roundText;
 
+        TurnShifter turnShifter;
+
         private void OnEnable()
         {
-            TurnShifter.Instance.onRoundIncremented += UpdateText;
+            turnShifter = TurnShifter.Instance;
+            turnShifter.onRoundIncremented += UpdateText;
         }
 
         private void Start()
@@ -28,7 +31,7 @@ namespace Pom.UI.TurnSystem
 
         private void OnDisable()
         {
-            TurnShifter.Instance.onRoundIncremented -= UpdateText;
+            turnShifter.onRoundIncremented -= UpdateText;
         }
     }
 }

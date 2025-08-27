@@ -1,5 +1,7 @@
 using Pom.Alliances;
+using Pom.CharacterActions;
 using Pom.Units;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,9 +9,13 @@ namespace Pom.Control
 {
     public abstract class Controller : MonoBehaviour
     {
+        [SerializeField] protected List<ActionExecutionArg> actionArgs = new List<ActionExecutionArg>();
+
         protected Alliance alliance => GetComponent<Alliance>();
 
         protected List<Unit> controllableUnits = new List<Unit>();
+
+        public event Action onTurnStarted;
 
         public virtual void InitiateTurn()
         {
@@ -19,6 +25,8 @@ namespace Pom.Control
             {
                 unit.ResetActionStates();
             }
+
+            onTurnStarted?.Invoke();
         }
 
         public virtual void ExitTurn(){ }
@@ -37,6 +45,20 @@ namespace Pom.Control
                     controllableUnits.Add(unit);
                 }
             }
+        }
+
+        public abstract void SetActiveUnit(Unit unit);
+
+
+        public static Controller GetControllerByFaction(Faction faction)
+        {
+            foreach(Controller controller in FindObjectsByType<Controller>(FindObjectsSortMode.None))
+            {
+                if(controller.alliance.AlliedFaction == faction) return controller;
+            }
+
+            Debug.LogWarning($"No controllers found for faction {faction.ToString()}");
+            return null;
         }
     }
 }
