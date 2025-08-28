@@ -27,11 +27,11 @@ namespace Pom.UI.Units
 
         private void HandleUnitSelected(Unit unit)
         {
-            if(this.unit != null) this.unit.Health.onTakeDamage -= UpdateHealthText;
+            if(this.unit != null) this.unit.Health.onTakeDamage.AddListener(HandleTakeDamage);
 
             this.unit = unit;
             namePresenter.text = unit.DisplayName;
-            unit.Health.onTakeDamage += UpdateHealthText;
+            unit.Health.onTakeDamage.AddListener(HandleTakeDamage);
             UpdateHealthText();
 
             for (int i = actionButtonContainer.childCount - 1; i >= 0; i--)
@@ -51,6 +51,11 @@ namespace Pom.UI.Units
             Canvas.ForceUpdateCanvases();
         }
 
+        void HandleTakeDamage(GameObject aggressor)
+        {
+            UpdateHealthText();
+        }
+
         private void UpdateHealthText()
         {
             healthPresenter.text = $"health: {unit.Health.CurrentHealth}/{unit.Health.StartingHealth}";
@@ -64,7 +69,7 @@ namespace Pom.UI.Units
         private void OnDisable()
         {
             playerController.onUnitSelected -= HandleUnitSelected;
-            unit.Health.onTakeDamage -= UpdateHealthText;
+            unit.Health.onTakeDamage.RemoveListener(HandleTakeDamage);
         }
     }
 }

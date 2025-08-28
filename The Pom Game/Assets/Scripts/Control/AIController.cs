@@ -32,8 +32,6 @@ namespace Pom.Control
 
             Unit currentUnit = controllableUnits[unitIndex];
 
-            Debug.Log($"Executing actions for {currentUnit.DisplayName}");
-
             if (actionIndex >= currentUnit.Actions.Count)
             {
                 IterateUnitIndex();
@@ -44,12 +42,11 @@ namespace Pom.Control
 
             ActionExecutor activeAction = currentUnit.Actions[actionIndex];
 
-            Debug.Log($"Using action {activeAction.GetDisplayName()}");
-
             if(activeAction.AIExecutionStrategy.TryGetTargetPosition(currentUnit, out Vector2 targetPosition, activeAction.RangeStrategy))
 
             if(currentUnit.Actions[actionIndex].TryExecute(targetPosition, actionArgs,
                 () => {
+                    RaiseActionCompleted();
                     IterateActionIndex();
                     ExecuteNextAction(); 
                 }))

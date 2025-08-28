@@ -18,7 +18,7 @@ namespace Pom.CharacterActions.Combat
 
         public void Attack(Health target)
         {
-            target.TakeDamage(damage);
+            target.TakeDamage(damage, gameObject);
         }
 
         public override bool TryExecute(Vector2 gridPosition, List<ActionExecutionArg> executionArgs, Action finished)

@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &1630528609833351911
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4432249597617819623, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -5154189640090123692, guid: 86532d3e311d6bf4382b21236fcb8510, type: 3}
+    - target: {fileID: 4432249597617819623, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4432249597617819623, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4432249597617819623, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495168752661978102, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: ignoreSemipermeable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5043888694419610694, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: <DisplayName>k__BackingField
+      value: Flag
+      objectReference: {fileID: 0}
+    - target: {fileID: 5043888694419610694, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: <Actions>k__BackingField.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087846487709253424, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087846487709253424, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087846487709253424, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087846487709253424, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087846487709253424, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087846487709253424, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087846487709253424, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087846487709253424, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087846487709253424, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087846487709253424, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7285434410045885127, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: <StartingHealth>k__BackingField
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7599296480714431448, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_Name
+      value: Moving Flag
+      objectReference: {fileID: 0}
+    - target: {fileID: 8553484927366865322, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: <RangeStrategy>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: d6966c93c611429448e32e90b9925741, type: 2}
+    - target: {fileID: 8553484927366865322, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: <AIExecutionStrategy>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: d7a441cf4d7a2f049a2c3d8f2f77ad85, type: 2}
+    m_RemovedComponents:
+    - {fileID: 3453472555472524655, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}

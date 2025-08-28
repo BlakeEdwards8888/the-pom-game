@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 870cae819de968342827a4bde3c8e545, type: 3}
   m_Name: MoveToTargetInAttackRange
   m_EditorClassIdentifier: Assembly-CSharp::Pom.CharacterActions.AIExecutionStrategies.Movement.MoveToTargetInRange
+  otherActionName: Attack

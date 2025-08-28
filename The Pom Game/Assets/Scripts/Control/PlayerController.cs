@@ -89,7 +89,7 @@ namespace Pom.Control
                 Vector2 mouseGridPosition = GetMouseGridPosition();
                 ActionExecutor usingAction = activeAction;
                 SetActiveAction(null);
-                usingAction.TryExecute(mouseGridPosition, actionArgs);
+                usingAction.TryExecute(mouseGridPosition, actionArgs, RaiseActionCompleted);
             }
         }
 

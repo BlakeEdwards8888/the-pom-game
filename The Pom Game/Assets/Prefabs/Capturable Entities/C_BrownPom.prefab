@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0b1f5e679c11c7468bfdfba9faef927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pom.CharacterActions.Capturing.Ejector
-  <RangeStrategy>k__BackingField: {fileID: 11400000, guid: fe66fd81c0a7fd54695b4191fa6a69ac, type: 2}
+  <RangeStrategy>k__BackingField: {fileID: 11400000, guid: b0d22c10f41a6cb43bb7d4a5750a9d9d, type: 2}
   <AIExecutionStrategy>k__BackingField: {fileID: 0}
 --- !u!114 &4916105350836166859
 MonoBehaviour:
@@ -211,7 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5b892b50773fe14b96e99468cb1002e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pom.CharacterActions.Capturing.Capturer
-  <RangeStrategy>k__BackingField: {fileID: 11400000, guid: c362a470804bebb43914d008169b8b11, type: 2}
+  <RangeStrategy>k__BackingField: {fileID: 11400000, guid: 22acbe99225033646a6d8e23dc639873, type: 2}
   <AIExecutionStrategy>k__BackingField: {fileID: 0}
 --- !u!4 &4540329462231011322 stripped
 Transform:

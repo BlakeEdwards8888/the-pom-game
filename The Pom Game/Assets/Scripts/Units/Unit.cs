@@ -7,6 +7,7 @@ using Pom.CharacterActions.Combat;
 using System.Collections.Generic;
 using Pom.CharacterActions;
 using Pom.CharacterActions.AIExecutionStrategies;
+using System;
 
 namespace Pom.Units
 {
@@ -34,6 +35,16 @@ namespace Pom.Units
             {
                 action.ResetUsageState();
             }
+        }
+
+        public ActionExecutor GetAction(string otherActionName)
+        {
+            foreach(ActionExecutor action in Actions)
+            {
+                if (action.GetDisplayName() == otherActionName) return action;
+            }
+
+            return null;
         }
     }
 }

@@ -57,7 +57,11 @@ namespace Pom.CharacterActions.RangeHandling
             Vector2 deadzoneOrigin = new Vector2(currentPosition.x - deadZoneLength, currentPosition.y - deadZoneLength);
             Vector2 deadzoneEndPosition = new Vector2(currentPosition.x + deadZoneLength, currentPosition.y + deadZoneLength);
 
-            return condition(GridSystem.Instance.NavDict[targetPosition])
+            bool passesCondition = true;
+
+            if (condition != null) passesCondition = condition(GridSystem.Instance.NavDict[targetPosition]);
+
+            return passesCondition
                 && IsTargetWithinBoxDimensions(targetPosition, origin, endingGridPosition)
                 && !IsTargetWithinBoxDimensions(targetPosition, deadzoneOrigin, deadzoneEndPosition);
         }

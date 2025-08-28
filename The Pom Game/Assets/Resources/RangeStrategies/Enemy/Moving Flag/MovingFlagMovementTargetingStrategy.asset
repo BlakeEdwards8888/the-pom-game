@@ -9,7 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bfee36a6c69f6a4cabcd28474724ad1, type: 3}
-  m_Name: PlayerMovementRangeStrategy
-  m_EditorClassIdentifier: 
-  <Range>k__BackingField: 3
+  m_Script: {fileID: 11500000, guid: e89fa14f98b327e479c1137c84324f8d, type: 3}
+  m_Name: MovingFlagMovementTargetingStrategy
+  m_EditorClassIdentifier: Assembly-CSharp::Pom.CharacterActions.AIExecutionStrategies.Movement.MoveToEnemy

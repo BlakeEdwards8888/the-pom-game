@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1315c1aa4f408b540ae1f069b71a1fcc, type: 3}
-  m_Name: CrossPlayerAttackRangeStrategy
-  m_EditorClassIdentifier: 
+  m_Script: {fileID: 11500000, guid: 71bf21cf1ada6b7489e2d45b99bfe138, type: 3}
+  m_Name: BrownPomEjectRangeStrategy
+  m_EditorClassIdentifier: Assembly-CSharp::Pom.CharacterActions.RangeHandling.FullSquareRangeStrategy
   <Range>k__BackingField: 1
   <DeadZone>k__BackingField: 0
-  rangeStrategies:
-  - {fileID: 11400000, guid: 9e0af8babf33e474abbb39bc05df0768, type: 2}
-  - {fileID: 11400000, guid: 501d4c8a770125044a1bb116ef3f3aae, type: 2}

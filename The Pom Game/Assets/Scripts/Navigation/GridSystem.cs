@@ -41,9 +41,7 @@ namespace Pom.Navigation
         [field: SerializeField] public int Height { get; private set; }
         [field: SerializeField] public float CellSize { get; private set; }
         [field: SerializeField] public LayerMask ObstacleLayerMask { get; private set; }
-
-
-
+        [field: SerializeField] public LayerMask SemipermeableLayerMask { get; private set; }
 
         [SerializeField] GameObject nodeSelectableIndicatorPrefab;
 
@@ -76,7 +74,7 @@ namespace Pom.Navigation
                     Vector2 nodePosition = new Vector2(x * CellSize, y * CellSize);
                     GameObject nodeSelectableIndicator = Instantiate(nodeSelectableIndicatorPrefab, nodePosition, Quaternion.identity);
                     nodeSelectableIndicator.SetActive(false);
-                    _navDict[nodePosition] = new PathNode(nodePosition, ObstacleLayerMask, nodeSelectableIndicator);
+                    _navDict[nodePosition] = new PathNode(nodePosition, ObstacleLayerMask, SemipermeableLayerMask, nodeSelectableIndicator);
                 }
             }
         }

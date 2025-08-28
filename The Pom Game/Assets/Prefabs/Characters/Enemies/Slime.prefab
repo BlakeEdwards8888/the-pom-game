@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &6879008781389400444
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3453472555472524655, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: <RangeStrategy>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: d3024beddc71e2541b7bde41627849a2, type: 2}
+    - target: {fileID: 4432249597617819623, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -2902247422746666468, guid: ad2990ada56c9134e82395b1fc1a257a, type: 3}
+    - target: {fileID: 4432249597617819623, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4432249597617819623, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4432249597617819623, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5043888694419610694, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: <DisplayName>k__BackingField
+      value: Slime
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087846487709253424, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087846487709253424, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087846487709253424, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087846487709253424, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087846487709253424, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087846487709253424, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087846487709253424, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087846487709253424, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087846487709253424, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087846487709253424, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7285434410045885127, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: <StartingHealth>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7599296480714431448, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: m_Name
+      value: Slime
+      objectReference: {fileID: 0}
+    - target: {fileID: 8553484927366865322, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      propertyPath: <RangeStrategy>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 87ce170fb3751c8499b6931934ef5367, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}

@@ -16,6 +16,7 @@ namespace Pom.Control
         protected List<Unit> controllableUnits = new List<Unit>();
 
         public event Action onTurnStarted;
+        public event Action onActionCompleted;
 
         public virtual void InitiateTurn()
         {
@@ -45,6 +46,11 @@ namespace Pom.Control
                     controllableUnits.Add(unit);
                 }
             }
+        }
+
+        protected void RaiseActionCompleted()
+        {
+            onActionCompleted?.Invoke();
         }
 
         public abstract void SetActiveUnit(Unit unit);

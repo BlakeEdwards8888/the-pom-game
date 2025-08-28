@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 235354824689822017, guid: 3d55790cac0901549a28ceb82747daf6, type: 3}
+      propertyPath: <RangeStrategy>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 4ec2c14fcd316014a868eb6380d905e2, type: 2}
     - target: {fileID: 1219137602538619436, guid: 3d55790cac0901549a28ceb82747daf6, type: 3}
       propertyPath: <StartingHealth>k__BackingField
       value: 1

@@ -28,7 +28,7 @@ namespace Pom.CharacterActions.Capturing
 
             if (targetPositionNode == null) return false;
             if (!targetPositionNode.IsWalkable()) return false;
-            if (targetPositionNode.TryGetOccupyingEntity(out Health occupyingHealth)) return false;
+            if (targetPositionNode.IsSemipermeable()) return false;
 
             Execute(targetPosition, finished);
             return true;
