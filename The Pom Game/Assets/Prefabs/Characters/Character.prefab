@@ -9,14 +9,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2739034142274420635}
-  - component: {fileID: 3668748009972834561}
-  - component: {fileID: 8807945704075713373}
-  - component: {fileID: 2397348934352063084}
-  - component: {fileID: 7760587421066335684}
-  - component: {fileID: 1198981840000583811}
-  - component: {fileID: 541570294616131336}
   - component: {fileID: 117491418955209965}
-  m_Layer: 0
+  - component: {fileID: 3668748009972834561}
+  - component: {fileID: 7760587421066335684}
+  - component: {fileID: 2397348934352063084}
+  - component: {fileID: 541570294616131336}
+  - component: {fileID: 8807945704075713373}
+  - component: {fileID: 1198981840000583811}
+  m_Layer: 7
   m_Name: Character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,6 +39,24 @@ Transform:
   - {fileID: 2943350073116580192}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &117491418955209965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3253859781954902899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5befa3dce8ead284c988f2d353e98004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pom.Units.Unit
+  <Health>k__BackingField: {fileID: 2397348934352063084}
+  <DisplayName>k__BackingField: Unit McUnitface
+  <Alliance>k__BackingField: {fileID: 541570294616131336}
+  <Actions>k__BackingField:
+  - {fileID: 3668748009972834561}
+  - {fileID: 7760587421066335684}
 --- !u!114 &3668748009972834561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51,9 +69,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 863e09571b0cc1a4090e5b37c4203483, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangeStrategy: {fileID: 11400000, guid: 9a3b8c2b9c2e53749b248927c39f011e, type: 2}
+  <RangeStrategy>k__BackingField: {fileID: 11400000, guid: 9a3b8c2b9c2e53749b248927c39f011e, type: 2}
+  <AIExecutionStrategy>k__BackingField: {fileID: 11400000, guid: dba269ce2b2d42a46a1d8f5c957015b9, type: 2}
   moveSpeed: 5
---- !u!114 &8807945704075713373
+--- !u!114 &7760587421066335684
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -62,9 +81,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3253859781954902899}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6015cc7943badd9448e4912760a8f857, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c28039bb34336d479bfb984e9ab5a2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <RangeStrategy>k__BackingField: {fileID: 11400000, guid: fe66fd81c0a7fd54695b4191fa6a69ac, type: 2}
+  <AIExecutionStrategy>k__BackingField: {fileID: 11400000, guid: 12896f56e75a3b84e8d247738b7ec2a1, type: 2}
+  damage: 1
 --- !u!114 &2397348934352063084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,7 +100,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <StartingHealth>k__BackingField: 3
---- !u!114 &7760587421066335684
+  onTakeDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeath:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &541570294616131336
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -87,11 +115,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 3253859781954902899}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c28039bb34336d479bfb984e9ab5a2b, type: 3}
+  m_Script: {fileID: 11500000, guid: e10240a976055344caa3bb2332ba97d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangeStrategy: {fileID: 11400000, guid: fe66fd81c0a7fd54695b4191fa6a69ac, type: 2}
-  damage: 1
+  <AlliedFaction>k__BackingField: 0
+--- !u!114 &8807945704075713373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3253859781954902899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6015cc7943badd9448e4912760a8f857, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ignoreSemipermeable: 0
 --- !u!61 &1198981840000583811
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -138,36 +178,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &541570294616131336
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3253859781954902899}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e10240a976055344caa3bb2332ba97d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <AlliedFaction>k__BackingField: 0
---- !u!114 &117491418955209965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3253859781954902899}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5befa3dce8ead284c988f2d353e98004, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Pom.Units.Unit
-  <Health>k__BackingField: {fileID: 2397348934352063084}
-  <DisplayName>k__BackingField: Unit McUnitface
-  <Mover>k__BackingField: {fileID: 3668748009972834561}
-  <Attacker>k__BackingField: {fileID: 7760587421066335684}
-  <Alliance>k__BackingField: {fileID: 541570294616131336}
 --- !u!1 &3866663943921534213
 GameObject:
   m_ObjectHideFlags: 0
@@ -195,7 +205,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2739034142274420635}

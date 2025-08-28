@@ -10,7 +10,7 @@ namespace Pom.Attributes
 
         public int CurrentHealth { get; private set; }
 
-        public event Action onTakeDamage;
+        public UnityEvent<GameObject> onTakeDamage;
         public UnityEvent onDeath;
 
         private void Start()
@@ -18,11 +18,12 @@ namespace Pom.Attributes
             CurrentHealth = StartingHealth;
         }
 
-        public void TakeDamage(int damage)
+        public void TakeDamage(int damage, GameObject aggressor)
         {
-            CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
+            if(CurrentHealth > 0)
+                CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
 
-            onTakeDamage?.Invoke();
+            onTakeDamage?.Invoke(aggressor);
 
             if(CurrentHealth == 0)
             {

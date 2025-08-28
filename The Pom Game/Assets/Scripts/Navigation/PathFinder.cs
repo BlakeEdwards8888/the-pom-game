@@ -6,6 +6,8 @@ namespace Pom.Navigation
 {
     public class PathFinder : MonoBehaviour
     {
+        [SerializeField] bool ignoreSemipermeable = false;
+
         public enum RangeOverflowMode
         {
             Cancel,
@@ -18,10 +20,7 @@ namespace Pom.Navigation
             Dictionary<Vector2, PathNode> navDict = GridSystem.Instance.NavDict;
 
             if (!navDict[endingPosition].IsWalkable()) return null;
-            if (navDict[endingPosition].TryGetOccupyingEntity(out Health health))
-            {
-                return null;
-            }
+            if (!ignoreSemipermeable && navDict[endingPosition].IsSemipermeable()) return null;
 
             List<PathNode> openList = new List<PathNode>();
             List<PathNode> closedList = new List<PathNode>(blacklist);
@@ -42,11 +41,13 @@ namespace Pom.Navigation
                     //end of path reached
                     List<PathNode> prospectivePath = GenerateFinalPath(navDict[endingPosition], range, rangeOverflowMode);
 
+                    if (prospectivePath == null) return null;
+
                     //If the final path ends on a space that contains a unit as a result of
                     //the range overflow mode, then we have to recalculate the path and ignore that node
                     //to prevent units from overlapping, but still alowing them to pass through
                     //each other on their way to their final destination
-                    if (prospectivePath[prospectivePath.Count - 1].TryGetOccupyingEntity(out Health occupyingHealth))
+                    if (!ignoreSemipermeable && prospectivePath[prospectivePath.Count - 1].IsSemipermeable())
                     {
                         blacklist.Add(prospectivePath[prospectivePath.Count - 1]);
                         return GetPath(startingPosition, endingPosition, range, rangeOverflowMode, blacklist);

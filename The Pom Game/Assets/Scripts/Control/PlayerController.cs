@@ -6,6 +6,7 @@ using Pom.Units;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace Pom.Control
@@ -35,10 +36,10 @@ namespace Pom.Control
 
         RangePresenter rangePresenter => GetComponent<RangePresenter>();
         Unit activeUnit;
-        PlayerState currentState = PlayerState.Idle;
+        ActionExecutor activeAction;
+        bool hasCurrentTurn;
 
         public event Action<Unit> onUnitSelected;
-        public event Action onActiveUnitAction;
         public event Action onActiveUnitCleared;
 
 
@@ -58,15 +59,7 @@ namespace Pom.Control
         {
             if (HandleUnitSelection()) return;
 
-            switch (currentState) 
-            {
-                case PlayerState.Move:
-                    HandleMovement();
-                    break;
-                case PlayerState.Attack:
-                    HandleAttack();
-                    break;
-            }
+            HandleAction();
         }
 
         private bool HandleUnitSelection()
@@ -76,9 +69,7 @@ namespace Pom.Control
                 if (GridSystem.Instance.NavDict[GetMouseGridPosition()].TryGetOccupyingEntity(out Unit unit))
                 {
                     if (unit.Alliance.AlliedFaction != alliance.AlliedFaction) return false;
-                    SwitchState(PlayerState.Idle);
-                    activeUnit = unit;
-                    onUnitSelected?.Invoke(unit);
+                    SetActiveUnit(unit);
                     return true;
                 }
             }
@@ -86,85 +77,43 @@ namespace Pom.Control
             return false;
         }
 
-        private void HandleMovement()
+        private void HandleAction()
         {
+            if (activeAction == null) return;
+            if (activeUnit == null) return;
+            if (EventSystem.current.IsPointerOverGameObject()) return;
+            if (!hasCurrentTurn) return;
+
             if (Mouse.current.leftButton.wasPressedThisFrame)
             {
-                if (activeUnit.CanMoveTo(GetMouseGridPosition(), out List<PathNode> path, PathFinder.RangeOverflowMode.Cancel))
-                {
-                    StartCoroutine(activeUnit.MoveAlongPath(path));
-                    SwitchState(PlayerState.Idle);
-                    onActiveUnitAction?.Invoke();
-                }
+                Vector2 mouseGridPosition = GetMouseGridPosition();
+                ActionExecutor usingAction = activeAction;
+                SetActiveAction(null);
+                usingAction.TryExecute(mouseGridPosition, actionArgs, RaiseActionCompleted);
             }
         }
 
-        void HandleAttack()
+        public void SetActiveAction(ActionExecutor action)
         {
-            if (Mouse.current.leftButton.wasPressedThisFrame)
+            if (action == activeAction) return;
+
+            activeAction = action;
+
+            if(activeAction == null || activeAction.IsUsed)
             {
-                if (activeUnit.TryAttack(GetMouseGridPosition()))
-                {
-                    SwitchState(PlayerState.Idle);
-                    onActiveUnitAction?.Invoke();
-                }
+                rangePresenter.ClearSelectableNodes();
+            }
+            else
+            {
+                rangePresenter.ShowSelectableNodes(activeAction.GetNodesInRange(activeUnit.Position));
             }
         }
 
         public void ClearActiveUnit()
         {
             activeUnit = null;
-            SwitchState(PlayerState.Idle);
+            SetActiveAction(null);
             onActiveUnitCleared?.Invoke();
-        }
-
-        public void SwitchState(PlayerState newState)
-        {
-            HandleExitState();
-            HandleEnterState(newState);
-
-            currentState = newState;
-        }
-
-        void HandleEnterState(PlayerState newState)
-        {
-            Vector2 activeUnitGridPosition = Vector2.zero;
-
-            if(activeUnit != null) activeUnitGridPosition = GridSystem.Instance.GetGridPosition(activeUnit.transform.position);
-
-            switch (newState)
-            {
-                case PlayerState.Idle:
-                    rangePresenter.ClearSelectableNodes();
-                    break;
-                case PlayerState.Move:
-                    rangePresenter.ShowSelectableNodes(activeUnit.Mover.GetNodesInRange(activeUnitGridPosition, (node) => { return node.IsWalkable(); }));
-                    break;
-                case PlayerState.Attack:
-                    rangePresenter.ShowSelectableNodes(activeUnit.Attacker.GetNodesInRange(activeUnitGridPosition,
-                        (node) =>
-                        {
-                            if (!node.IsWalkable()) return false;
-
-                            if (Physics2D.Linecast(node.Position, activeUnitGridPosition, GridSystem.Instance.ObstacleLayerMask)) return false;
-
-                            return true;
-                        }));
-                    break;
-            }
-        }
-
-        void HandleExitState()
-        {
-            switch (currentState)
-            {
-                case PlayerState.Idle:
-                    break;
-                case PlayerState.Move:
-                    break;
-                case PlayerState.Attack:
-                    break;
-            }
         }
 
         private void HandleUnitDeath()
@@ -177,19 +126,6 @@ namespace Pom.Control
             }
         }
 
-        public bool CanUseState(PlayerState state)
-        {
-            switch (state)
-            {
-                case PlayerState.Move:
-                    return activeUnit.CanMove;
-                case PlayerState.Attack:
-                    return activeUnit.CanAttack;
-            }
-
-            return true;
-        }
-
         private Vector2 GetMouseGridPosition()
         {
             Vector2 worldMousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
@@ -197,11 +133,19 @@ namespace Pom.Control
             return mouseGridPosition;
         }
 
+        public override void InitiateTurn()
+        {
+            base.InitiateTurn();
+
+            hasCurrentTurn = true;
+        }
+
         public override void ExitTurn()
         {
             base.ExitTurn();
 
-            SwitchState(PlayerState.Idle);
+            SetActiveAction(null);
+            hasCurrentTurn = false;
         }
 
         protected override void FindControllableUnits()
@@ -215,6 +159,19 @@ namespace Pom.Control
                 if (controllableUnitsCache.Contains(unit)) continue;
                 unit.Health.onDeath.AddListener(HandleUnitDeath);
             }
+        }
+
+        public override void SetActiveUnit(Unit unit)
+        {
+            if (!controllableUnits.Contains(unit))
+            {
+                controllableUnits.Add(unit);
+                unit.Health.onDeath.AddListener(HandleUnitDeath);
+            }
+
+            activeUnit = unit;
+            SetActiveAction(unit.Actions[0]);
+            onUnitSelected?.Invoke(activeUnit);
         }
     }
 }
