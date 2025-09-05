@@ -20,6 +20,8 @@ namespace Pom.CharacterActions.AIExecutionStrategies.Movement
 
             Health targetHealth = FindClosestEnemyHealth(currentUnit.Position, currentUnit.Alliance.AlliedFaction);
 
+            if (targetHealth == null) return false;
+
             Vector2 closestEnemyPosition = GridSystem.Instance.GetGridPosition(targetHealth.transform.position);
 
             ActionExecutor otherAction = currentUnit.GetAction(otherActionName);
