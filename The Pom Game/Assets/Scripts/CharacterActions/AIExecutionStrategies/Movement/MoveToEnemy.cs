@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Pom.CharacterActions.AIExecutionStrategies.Movement
 {
-    [CreateAssetMenu(fileName = "New Closest Enemy Execution Strategy", menuName = "Execution Strategies/Closest Enemy Strategy")]
+    [CreateAssetMenu(fileName = "New Closest Enemy Execution Strategy", menuName = "AI Execution Strategies/Closest Enemy Strategy")]
     public class MoveToEnemy : ExecutionStrategy
     {
         public override bool TryGetTargetPosition(Unit currentUnit, out Vector2 targetPosition, RangeStrategy rangeStrategy)

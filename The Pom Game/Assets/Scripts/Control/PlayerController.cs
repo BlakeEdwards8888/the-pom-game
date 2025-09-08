@@ -66,7 +66,9 @@ namespace Pom.Control
         {
             if (Mouse.current.leftButton.wasPressedThisFrame)
             {
-                if (GridSystem.Instance.NavDict[GetMouseGridPosition()].TryGetOccupyingEntity(out Unit unit))
+                Vector2 mouseGridPosition = GetMouseGridPosition();
+
+                if (GridSystem.Instance.NavDict.ContainsKey(mouseGridPosition) && GridSystem.Instance.NavDict[mouseGridPosition].TryGetOccupyingEntity(out Unit unit))
                 {
                     if (unit.Alliance.AlliedFaction != alliance.AlliedFaction) return false;
                     SetActiveUnit(unit);
@@ -105,7 +107,7 @@ namespace Pom.Control
             }
             else
             {
-                rangePresenter.ShowSelectableNodes(activeAction.GetNodesInRange(activeUnit.Position));
+                rangePresenter.ShowSelectableNodes(activeAction.GetNodesInRange(activeUnit.Position, (node) => { return node.IsWalkable(); }));
             }
         }
 

@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.Drawing;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Pom.Navigation
 {
@@ -75,6 +73,7 @@ namespace Pom.Navigation
                     GameObject nodeSelectableIndicator = Instantiate(nodeSelectableIndicatorPrefab, nodePosition, Quaternion.identity);
                     nodeSelectableIndicator.SetActive(false);
                     _navDict[nodePosition] = new PathNode(nodePosition, ObstacleLayerMask, SemipermeableLayerMask, nodeSelectableIndicator);
+                    Debug.DrawLine(nodePosition, nodePosition + (Vector2.up * 0.1f), UnityEngine.Color.white, 10f);
                 }
             }
         }
