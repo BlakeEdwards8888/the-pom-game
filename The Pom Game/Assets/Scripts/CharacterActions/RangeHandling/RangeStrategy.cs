@@ -14,5 +14,10 @@ namespace Pom.CharacterActions.RangeHandling
         public abstract bool IsTargetInRange(Vector2 currentPosition, Vector2 targetPosition, Func<PathNode, bool> condition = null);
 
         public abstract List<PathNode> GetNodesInRange(Vector2 startingGridPosition, Func<PathNode, bool> condition = null);
+
+        public List<PathNode> GetNodesInRange(Vector2 startingGridPosition)
+        {
+            return GetNodesInRange(startingGridPosition, (node) => { return true; });
+        }
     }
 }

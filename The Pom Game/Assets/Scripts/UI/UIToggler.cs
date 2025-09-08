@@ -10,5 +10,10 @@ namespace Pom.UI
         {
             uiContainer.SetActive(toggle);
         }
+
+        public void ToggleUI()
+        {
+            uiContainer.SetActive(!uiContainer.activeSelf);
+        }
     }
 }
