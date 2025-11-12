@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: BrownPomMovementRangeStrategy
   m_EditorClassIdentifier: 
   <Range>k__BackingField: 3
+  <DeadZone>k__BackingField: 0
+  exclusions: 00000000

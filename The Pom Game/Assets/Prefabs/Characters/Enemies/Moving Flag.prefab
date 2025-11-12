@@ -96,5 +96,58 @@ PrefabInstance:
     - {fileID: 3453472555472524655, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7599296480714431448, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1206124430034323454}
+    - targetCorrespondingSourceObject: {fileID: 7599296480714431448, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2783930542426128286}
   m_SourcePrefab: {fileID: 100100000, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+--- !u!1 &9211781824184213823 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7599296480714431448, guid: b5dc3af9f8394734e83fbe654ab00c5f, type: 3}
+  m_PrefabInstance: {fileID: 1630528609833351911}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1206124430034323454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9211781824184213823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 414b3300db8b5be41b245e52285e385b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableEntity
+  interactableFilter: 0
+  onInteracted:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Pom.Objectives.ObjectiveSignaler, Assembly-CSharp
+        m_MethodName: SetObjectiveState
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2783930542426128286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9211781824184213823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fcd986bc14f0a048b3533b3980ef504, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pom.Objectives.ObjectiveSignaler
+  objectiveTag: get_flag
+  objectiveState: 1

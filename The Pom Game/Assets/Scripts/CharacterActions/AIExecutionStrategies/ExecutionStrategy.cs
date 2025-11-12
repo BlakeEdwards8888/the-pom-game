@@ -3,6 +3,7 @@ using Pom.Attributes;
 using Pom.CharacterActions.RangeHandling;
 using Pom.Navigation;
 using Pom.Units;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Pom.CharacterActions.AIExecutionStrategies
@@ -32,6 +33,28 @@ namespace Pom.CharacterActions.AIExecutionStrategies
             }
 
             return closestEnemyHealth;
+        }
+
+        protected PathNode GetClosestNode(Unit testUnit, List<PathNode> possibleEndingNodes)
+        {
+            PathNode closestNode = null;
+            float closestDistance = Mathf.Infinity;
+
+            for (int i = 0; i < possibleEndingNodes.Count; i++)
+            {
+                if (!possibleEndingNodes[i].IsWalkable()) continue;
+                if (possibleEndingNodes[i].IsSemipermeable()) continue;
+                if (possibleEndingNodes[i].TryGetOccupyingEntity(out Unit unit) && unit != testUnit) continue;
+
+                float distanceToNode = GridSystem.GetDistance(testUnit.Position, possibleEndingNodes[i].Position);
+                if (distanceToNode < closestDistance)
+                {
+                    closestNode = possibleEndingNodes[i];
+                    closestDistance = distanceToNode;
+                }
+            }
+
+            return closestNode;
         }
     }
 }

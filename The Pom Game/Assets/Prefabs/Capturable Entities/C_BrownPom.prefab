@@ -230,6 +230,10 @@ PrefabInstance:
       propertyPath: capturedState
       value: 
       objectReference: {fileID: 1774441686266588300}
+    - target: {fileID: 5360955326052076671, guid: 97838a0022c1d9a409482dd63fba624e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 5944979055680795526, guid: 97838a0022c1d9a409482dd63fba624e, type: 3}
       propertyPath: m_Name
       value: C_BrownPom

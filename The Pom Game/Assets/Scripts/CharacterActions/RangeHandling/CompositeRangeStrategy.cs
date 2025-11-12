@@ -10,13 +10,13 @@ namespace Pom.CharacterActions.RangeHandling
     {
         [SerializeField] List<RangeStrategy> rangeStrategies = new List<RangeStrategy>();
 
-        public override List<PathNode> GetNodesInRange(Vector2 startingGridPosition, Func<PathNode, bool> condition)
+        public override List<PathNode> GetNodesInRange(Vector2 startingGridPosition)
         {
             List<PathNode> result = new List<PathNode>();
 
             foreach (RangeStrategy rangeStrategy in rangeStrategies)
             {
-                foreach (PathNode node in rangeStrategy.GetNodesInRange(startingGridPosition, condition))
+                foreach (PathNode node in rangeStrategy.GetNodesInRange(startingGridPosition))
                 {
                     result.Add(node);
                 }
@@ -25,11 +25,11 @@ namespace Pom.CharacterActions.RangeHandling
             return result;
         }
 
-        public override bool IsTargetInRange(Vector2 currentPosition, Vector2 targetPosition, Func<PathNode, bool> condition)
+        public override bool IsTargetInRange(Vector2 currentPosition, Vector2 targetPosition)
         {
             foreach (RangeStrategy rangeStrategy in rangeStrategies)
             {
-                if (rangeStrategy.IsTargetInRange(currentPosition, targetPosition, condition)) return true;
+                if (rangeStrategy.IsTargetInRange(currentPosition, targetPosition)) return true;
             }
 
             return false;

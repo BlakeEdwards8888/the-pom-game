@@ -9,8 +9,8 @@ using UnityEngine;
 
 namespace Pom.CharacterActions.AIExecutionStrategies.Movement
 {
-    [CreateAssetMenu(fileName = "MoveToTargetInAttackRange", menuName = "AI Execution Strategies/MoveToTargetInAttackRange")]
-    public class MoveToTargetInAttackRange : ExecutionStrategy
+    [CreateAssetMenu(fileName = "New Move To Closest Target In Action Range", menuName = "AI Execution Strategies/Move To Closest Target In Action Range")]
+    public class MoveToClosestTargetInActionRange : ExecutionStrategy
     {
         [SerializeField] string otherActionName;
 
@@ -32,7 +32,7 @@ namespace Pom.CharacterActions.AIExecutionStrategies.Movement
                 return false;
             }
 
-            PathNode targetMovementNode = GetClosestNode(currentUnit, currentUnit.GetComponent<Attacker>().GetNodesInRange(closestEnemyPosition));
+            PathNode targetMovementNode = GetClosestNode(currentUnit, otherAction.GetNodesInRange(closestEnemyPosition));
 
             if (targetMovementNode == null)
             {
@@ -42,28 +42,6 @@ namespace Pom.CharacterActions.AIExecutionStrategies.Movement
 
             targetPosition = targetMovementNode.Position;
             return true;
-        }
-
-        private PathNode GetClosestNode(Unit testUnit, List<PathNode> possibleEndingNodes)
-        {
-            PathNode closestNode = null;
-            float closestDistance = Mathf.Infinity;
-
-            for (int i = 0; i < possibleEndingNodes.Count; i++)
-            {
-                if (!possibleEndingNodes[i].IsWalkable()) continue;
-                if (possibleEndingNodes[i].IsSemipermeable()) continue;
-                if (possibleEndingNodes[i].TryGetOccupyingEntity(out Unit unit) && unit != testUnit) continue;
-
-                float distanceToNode = GridSystem.GetDistance(testUnit.Position, possibleEndingNodes[i].Position);
-                if (distanceToNode < closestDistance)
-                {
-                    closestNode = possibleEndingNodes[i];
-                    closestDistance = distanceToNode;
-                }
-            }
-
-            return closestNode;
         }
     }
 }

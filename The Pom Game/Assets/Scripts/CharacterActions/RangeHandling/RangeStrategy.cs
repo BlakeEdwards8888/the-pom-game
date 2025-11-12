@@ -8,16 +8,27 @@ namespace Pom.CharacterActions.RangeHandling
 {
     public abstract class RangeStrategy : ScriptableObject
     {
+        enum Filter
+        {
+            Unwalkable,
+            Semipermeable
+        }
+
         [field: SerializeField] public int Range { get; private set; }
         [field: SerializeField] public int DeadZone { get; private set; }
 
-        public abstract bool IsTargetInRange(Vector2 currentPosition, Vector2 targetPosition, Func<PathNode, bool> condition = null);
+        [SerializeField] List<Filter> exclusions = new List<Filter>();
 
-        public abstract List<PathNode> GetNodesInRange(Vector2 startingGridPosition, Func<PathNode, bool> condition = null);
+        public abstract bool IsTargetInRange(Vector2 currentPosition, Vector2 targetPosition);
 
-        public List<PathNode> GetNodesInRange(Vector2 startingGridPosition)
+        public abstract List<PathNode> GetNodesInRange(Vector2 startingGridPosition);
+
+        protected bool CheckAgainstFilter(PathNode node)
         {
-            return GetNodesInRange(startingGridPosition, (node) => { return true; });
+            if (exclusions.Contains(Filter.Unwalkable) && !node.IsWalkable()) return false;
+            if (exclusions.Contains(Filter.Semipermeable) && node.IsSemipermeable()) return false;
+
+            return true;
         }
     }
 }

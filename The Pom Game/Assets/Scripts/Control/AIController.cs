@@ -1,6 +1,4 @@
-using Pom.Attributes;
 using Pom.CharacterActions;
-using Pom.Navigation;
 using Pom.TurnSystem;
 using Pom.Units;
 using UnityEngine;
@@ -77,6 +75,8 @@ namespace Pom.Control
 
         public override void SetActiveUnit(Unit unit)
         {
+            base.SetActiveUnit(unit);
+
             controllableUnits[unitIndex] = unit;
 
             //Setting actionIndex to -1 here to make sure that when the next action gets executed,

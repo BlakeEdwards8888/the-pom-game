@@ -1,10 +1,8 @@
 using Pom.CharacterActions;
 using Pom.Navigation;
 using Pom.Navigation.Presentation;
-using Pom.Objectives;
 using Pom.Units;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -118,16 +116,6 @@ namespace Pom.Control
             onActiveUnitCleared?.Invoke();
         }
 
-        private void HandleUnitDeath()
-        {
-            FindControllableUnits();
-
-            if(controllableUnits.Count == 0)
-            {
-                ObjectivesList.Instance.TriggerFailureState();
-            }
-        }
-
         private Vector2 GetMouseGridPosition()
         {
             Vector2 worldMousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
@@ -150,26 +138,9 @@ namespace Pom.Control
             hasCurrentTurn = false;
         }
 
-        protected override void FindControllableUnits()
-        {
-            List<Unit> controllableUnitsCache = new List<Unit>(controllableUnits);
-
-            base.FindControllableUnits();
-
-            foreach (Unit unit in controllableUnits)
-            {
-                if (controllableUnitsCache.Contains(unit)) continue;
-                unit.Health.onDeath.AddListener(HandleUnitDeath);
-            }
-        }
-
         public override void SetActiveUnit(Unit unit)
         {
-            if (!controllableUnits.Contains(unit))
-            {
-                controllableUnits.Add(unit);
-                unit.Health.onDeath.AddListener(HandleUnitDeath);
-            }
+            base.SetActiveUnit(unit);
 
             activeUnit = unit;
             SetActiveAction(unit.Actions[0]);

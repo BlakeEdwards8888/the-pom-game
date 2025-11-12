@@ -18,12 +18,12 @@ namespace Pom.CharacterActions
 
         public bool IsTargetInRange(Vector2 currentPosition, Vector2 targetPosition, Func<PathNode, bool> condition = null)
         {
-            return RangeStrategy.IsTargetInRange(currentPosition, targetPosition, condition != null ? condition : (node) => { return true; });
+            return RangeStrategy.IsTargetInRange(currentPosition, targetPosition);
         }
 
         public List<PathNode> GetNodesInRange(Vector2 startingGridPosition, Func<PathNode, bool> condition = null)
         {
-            return RangeStrategy.GetNodesInRange(startingGridPosition, condition != null ? condition : (node) => { return true; });
+            return RangeStrategy.GetNodesInRange(startingGridPosition);
         }
 
         public int GetRange()
