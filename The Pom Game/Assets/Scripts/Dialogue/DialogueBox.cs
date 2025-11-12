@@ -1,37 +1,54 @@
+using Pom.UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace Dialogue
+namespace Pom.Dialogue
 {
     public class DialogueBox : MonoBehaviour
     {
         [Header("Settings")]
-        [SerializeField] List<string> dialogues = new List<string> ();
+        //[SerializeField] List<string> dialogues = new List<string> ();
         [SerializeField] float typeRate;
 
         [Header("References")]
         [SerializeField] TMP_Text textBox;
 
         int dialogueIndex;
+        Coroutine currentCoroutine;
+        string[] dialogues;
 
-        private void Start()
+        public void SetDialogue(DialogueConfig config)
         {
-            ShowNextDialogue();
+            dialogues = config.Dialogues;
+            dialogueIndex = 0;
         }
 
         //called by the "Next" button
         public void ShowNextDialogue()
         {
-            if (dialogueIndex == dialogues.Count) return;
+            if (dialogueIndex >= dialogues.Length && currentCoroutine == null)
+            {
+                GetComponent<UIToggler>().ToggleUI(false);
+                return;
+            }
 
-            StopAllCoroutines();
-            StartCoroutine(TypeDialogue(dialogues[dialogueIndex]));
-            dialogueIndex++;
+            if (currentCoroutine == null)
+            {
+                currentCoroutine = StartCoroutine(TypeDialogue(dialogues[dialogueIndex], () => { dialogueIndex++; }));
+            }
+            else
+            {
+                StopCoroutine(currentCoroutine);
+                textBox.text = dialogues[dialogueIndex];
+                currentCoroutine = null;
+                dialogueIndex++;
+            }
         }
 
-        IEnumerator TypeDialogue(string dialogue)
+        IEnumerator TypeDialogue(string dialogue, Action finished = null)
         {
             textBox.text = "";
             char[] dialogueArray = dialogue.ToCharArray();
@@ -41,6 +58,9 @@ namespace Dialogue
                 textBox.text += c;
                 yield return new WaitForSeconds(char.IsWhiteSpace(c) ? 0 : typeRate);
             }
+
+            currentCoroutine = null;
+            finished?.Invoke();
         }
     }
 }

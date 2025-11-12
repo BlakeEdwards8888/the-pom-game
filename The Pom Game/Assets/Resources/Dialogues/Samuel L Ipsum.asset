@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baf5e1b2dc24a7e438f28280808d53b4, type: 3}
+  m_Name: Samuel L Ipsum
+  m_EditorClassIdentifier: Assembly-CSharp::Pom.Dialogue.DialogueConfig
+  <Dialogues>k__BackingField:
+  - Normally, both your asses would be dead as fucking fried chicken
+  - but you happen to pull this shit while I'm in a transitional period
+  - so I don't wanna kill you
+  - I wanna help you
+  - But I can't give you this case, it don't belong to me
+  - Besides, I've already been through too much shit this morning over this case
+    to hand it over to your dumb ass
+  - New Text

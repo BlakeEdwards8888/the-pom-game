@@ -1058,7 +1058,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1714128149}
+    m_TransformParent: {fileID: 1950346013}
     m_Modifications:
     - target: {fileID: 346669397522459137, guid: 54d7494ba575edf438b76ea17a520f68, type: 3}
       propertyPath: m_text
@@ -1118,15 +1118,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5505293768071358681, guid: 54d7494ba575edf438b76ea17a520f68, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5505293768071358681, guid: 54d7494ba575edf438b76ea17a520f68, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5505293768071358681, guid: 54d7494ba575edf438b76ea17a520f68, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5505293768071358681, guid: 54d7494ba575edf438b76ea17a520f68, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1199,6 +1199,10 @@ PrefabInstance:
       value: Text
       objectReference: {fileID: 0}
     - target: {fileID: 644354810297567497, guid: 11428d86c0c11cc4eac93e7756cbcde4, type: 3}
+      propertyPath: m_fontSize
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 644354810297567497, guid: 11428d86c0c11cc4eac93e7756cbcde4, type: 3}
       propertyPath: m_fontColor.b
       value: 0
       objectReference: {fileID: 0}
@@ -1209,6 +1213,14 @@ PrefabInstance:
     - target: {fileID: 644354810297567497, guid: 11428d86c0c11cc4eac93e7756cbcde4, type: 3}
       propertyPath: m_fontColor.r
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 644354810297567497, guid: 11428d86c0c11cc4eac93e7756cbcde4, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 644354810297567497, guid: 11428d86c0c11cc4eac93e7756cbcde4, type: 3}
+      propertyPath: m_TextWrappingMode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 644354810297567497, guid: 11428d86c0c11cc4eac93e7756cbcde4, type: 3}
       propertyPath: m_fontColor32.rgba
@@ -1468,6 +1480,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7741464461250167354, guid: f24cd14ae5a283d4085ec9b8a7ac8a25, type: 3}
   m_PrefabInstance: {fileID: 1374803970}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &857018796
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 857018798}
+  - component: {fileID: 857018797}
+  m_Layer: 0
+  m_Name: DialogueTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &857018797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 857018796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd390ea6d57141d4688f9c9d15372bd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pom.Dialogue.DialogueTrigger
+  dialogueBox: {fileID: 1714128150}
+  dialogueConfig: {fileID: 11400000, guid: 34983b4831abecd4889f99a9b6a18326, type: 2}
+--- !u!4 &857018798
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 857018796}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 453.44778, y: 117.39333, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &904514498
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1975,8 +2033,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1714128149}
   - component: {fileID: 1714128150}
+  - component: {fileID: 1714128151}
   m_Layer: 5
-  m_Name: Dialogue Box
+  m_Name: Dialogue Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1995,7 +2054,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1950346013}
-  - {fileID: 620021204}
   m_Father: {fileID: 4214130535616416749}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -2015,14 +2073,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dd3cae224a98a74aa299bcccdfd31da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue.DialogueBox
-  dialogues:
-  - Oh dear
-  - I do believe I've shat myself
-  - Do you have a napkin I could borrow?
-  - How embarrassing
-  - New Text
-  typeRate: 0.05
+  typeRate: 0.02
   textBox: {fileID: 699705151}
+--- !u!114 &1714128151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714128148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 689e49b7b2eef2c458a98691c26f0274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pom.UI.UIToggler
+  uiContainer: {fileID: 1950346012}
 --- !u!4 &1792831920 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7741464461250167354, guid: f24cd14ae5a283d4085ec9b8a7ac8a25, type: 3}
@@ -2193,12 +2258,12 @@ GameObject:
   - component: {fileID: 1950346015}
   - component: {fileID: 1950346014}
   m_Layer: 5
-  m_Name: Background
+  m_Name: Dialogue Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1950346013
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2212,6 +2277,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 699705150}
+  - {fileID: 620021204}
   m_Father: {fileID: 1714128149}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2930,3 +2996,4 @@ SceneRoots:
   - {fileID: 6828040889387079225}
   - {fileID: 5678409656016896757}
   - {fileID: 4214130535616416748}
+  - {fileID: 857018798}
