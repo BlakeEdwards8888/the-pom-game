@@ -1,7 +1,5 @@
 using Pom.Navigation;
-using System;
 using System.Collections.Generic;
-using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 
 namespace Pom.CharacterActions.RangeHandling
@@ -9,7 +7,7 @@ namespace Pom.CharacterActions.RangeHandling
     [CreateAssetMenu(fileName = "New Full Square Range Strategy", menuName = "Range Strategies/Full Square Range Strategy")]
     public class FullSquareRangeStrategy : RangeStrategy
     {
-        public override List<PathNode> GetNodesInRange(Vector2 startingGridPosition, Func<PathNode, bool> condition = null)
+        public override List<PathNode> GetNodesInRange(Vector2 startingGridPosition)
         {
             List<PathNode> result = new List<PathNode>();
             float cellSize = GridSystem.Instance.CellSize;
@@ -38,7 +36,9 @@ namespace Pom.CharacterActions.RangeHandling
                     
                     if(GridSystem.Instance.TryGetGridPosition(samplePosition, out Vector2 gridPosition))
                     {
-                        result.Add(GridSystem.Instance.NavDict[gridPosition]);
+                        PathNode tempNode = GridSystem.Instance.NavDict[gridPosition];
+
+                        if(CheckAgainstFilter(tempNode)) result.Add(tempNode);
                     }
                 }
             }
@@ -46,7 +46,7 @@ namespace Pom.CharacterActions.RangeHandling
             return result;
         }
 
-        public override bool IsTargetInRange(Vector2 currentPosition, Vector2 targetPosition, Func<PathNode, bool> condition = null)
+        public override bool IsTargetInRange(Vector2 currentPosition, Vector2 targetPosition)
         {
             float length = (Range + DeadZone) * GridSystem.Instance.CellSize;
             float deadZoneLength = DeadZone * GridSystem.Instance.CellSize;
@@ -57,11 +57,7 @@ namespace Pom.CharacterActions.RangeHandling
             Vector2 deadzoneOrigin = new Vector2(currentPosition.x - deadZoneLength, currentPosition.y - deadZoneLength);
             Vector2 deadzoneEndPosition = new Vector2(currentPosition.x + deadZoneLength, currentPosition.y + deadZoneLength);
 
-            bool passesCondition = true;
-
-            if (condition != null) passesCondition = condition(GridSystem.Instance.NavDict[targetPosition]);
-
-            return passesCondition
+            return CheckAgainstFilter(GridSystem.Instance.NavDict[targetPosition])
                 && IsTargetWithinBoxDimensions(targetPosition, origin, endingGridPosition)
                 && !IsTargetWithinBoxDimensions(targetPosition, deadzoneOrigin, deadzoneEndPosition);
         }

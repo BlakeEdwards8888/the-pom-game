@@ -9,7 +9,7 @@ namespace Pom.CharacterActions.RangeHandling
     [CreateAssetMenu(fileName = "New Adjacent Range Strategy", menuName = "Range Strategies/Adjacent Range Strategy")]
     public class AdjacentRangeStrategy : RangeStrategy
     {
-        public override List<PathNode> GetNodesInRange(Vector2 startingGridPosition, Func<PathNode, bool> condition)
+        public override List<PathNode> GetNodesInRange(Vector2 startingGridPosition)
         {
             List<PathNode> nodesInRange = new List<PathNode>();
             Dictionary<Vector2, PathNode> navDict = GridSystem.Instance.NavDict;
@@ -24,7 +24,7 @@ namespace Pom.CharacterActions.RangeHandling
                 foreach (PathNode node in neighborNodeCache)
                 {
                     if (nodesInRange.Contains(node)) continue;
-                    if (!condition(node)) continue;
+                    if (!CheckAgainstFilter(node)) continue;
 
                     neighborNodes.Remove(node);
                     nodesInRange.Add(node);
@@ -40,9 +40,9 @@ namespace Pom.CharacterActions.RangeHandling
             return nodesInRange;
         }
 
-        public override bool IsTargetInRange(Vector2 currentPosition, Vector2 targetPosition, Func<PathNode, bool> condition)
+        public override bool IsTargetInRange(Vector2 currentPosition, Vector2 targetPosition)
         {
-            if (!condition(GridSystem.Instance.NavDict[targetPosition])) return false;
+            if (!CheckAgainstFilter(GridSystem.Instance.NavDict[currentPosition])) return false;
             return GridSystem.GetDistance(currentPosition, targetPosition) <= Range;
         }
     }

@@ -9,7 +9,7 @@ namespace Pom.CharacterActions.RangeHandling
     [CreateAssetMenu(fileName = "New Horizontal Range Strategy", menuName = "Range Strategies/Horizontal Range Strategy")]
     public class HorizontalRangeStrategy : RangeStrategy
     {
-        public override List<PathNode> GetNodesInRange(Vector2 startingGridPosition, Func<PathNode, bool> condition)
+        public override List<PathNode> GetNodesInRange(Vector2 startingGridPosition)
         {
             List<PathNode> result = new List<PathNode>();
 
@@ -21,7 +21,7 @@ namespace Pom.CharacterActions.RangeHandling
                 {
                     PathNode leftNode = GridSystem.Instance.NavDict[leftPosition];
 
-                    if (condition != null && condition(leftNode))
+                    if (CheckAgainstFilter(leftNode))
                         result.Add(leftNode);
                 }
 
@@ -29,7 +29,7 @@ namespace Pom.CharacterActions.RangeHandling
                 {
                     PathNode rightNode = GridSystem.Instance.NavDict[rightPosition];
 
-                    if (condition != null && condition(rightNode))
+                    if (CheckAgainstFilter(rightNode))
                         result.Add(rightNode);
                 }
             }
@@ -37,9 +37,9 @@ namespace Pom.CharacterActions.RangeHandling
             return result;
         }
 
-        public override bool IsTargetInRange(Vector2 currentPosition, Vector2 targetPosition, Func<PathNode, bool> condition)
+        public override bool IsTargetInRange(Vector2 currentPosition, Vector2 targetPosition)
         {
-            if (condition != null && !condition(GridSystem.Instance.NavDict[targetPosition])) return false;
+            if (!CheckAgainstFilter(GridSystem.Instance.NavDict[targetPosition])) return false;
             float horizontalDistance = Mathf.Abs(currentPosition.x - targetPosition.x);
             return currentPosition.y == targetPosition.y && horizontalDistance > DeadZone && horizontalDistance <= Range + DeadZone;
         }

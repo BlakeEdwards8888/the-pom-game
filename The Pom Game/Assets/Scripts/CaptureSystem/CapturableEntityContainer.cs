@@ -1,8 +1,6 @@
-using Pom.Alliances;
 using Pom.CharacterActions.Capturing;
 using Pom.Control;
 using Pom.Units;
-using System;
 using UnityEngine;
 
 namespace Pom.CaptureSystem

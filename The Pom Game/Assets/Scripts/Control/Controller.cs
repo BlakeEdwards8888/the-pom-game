@@ -4,6 +4,7 @@ using Pom.Units;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Pom.Control
 {
@@ -17,6 +18,8 @@ namespace Pom.Control
 
         public event Action onTurnStarted;
         public event Action onActionCompleted;
+
+        public UnityEvent onUnitsCleared;
 
         public virtual void InitiateTurn()
         {
@@ -34,6 +37,8 @@ namespace Pom.Control
 
         protected virtual void FindControllableUnits()
         {
+            List<Unit> controllableUnitsCache = new List<Unit>(controllableUnits);
+
             controllableUnits.Clear();
 
             Unit[] allUnits = FindObjectsByType<Unit>(FindObjectsSortMode.None);
@@ -46,6 +51,12 @@ namespace Pom.Control
                     controllableUnits.Add(unit);
                 }
             }
+
+            foreach (Unit unit in controllableUnits)
+            {
+                if (controllableUnitsCache.Contains(unit)) continue;
+                unit.Health.onDeath.AddListener(HandleUnitDeath);
+            }
         }
 
         protected void RaiseActionCompleted()
@@ -53,8 +64,24 @@ namespace Pom.Control
             onActionCompleted?.Invoke();
         }
 
-        public abstract void SetActiveUnit(Unit unit);
+        protected void HandleUnitDeath()
+        {
+            FindControllableUnits();
 
+            if (controllableUnits.Count == 0)
+            {
+                onUnitsCleared?.Invoke();
+            }
+        }
+
+        public virtual void SetActiveUnit(Unit unit)
+        {
+            if (!controllableUnits.Contains(unit))
+            {
+                controllableUnits.Add(unit);
+                unit.Health.onDeath.AddListener(HandleUnitDeath);
+            }
+        }
 
         public static Controller GetControllerByFaction(Faction faction)
         {

@@ -3,7 +3,6 @@ using Pom.Alliances;
 using Pom.CharacterActions.RangeHandling;
 using Pom.Navigation;
 using Pom.Units;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +17,7 @@ namespace Pom.CharacterActions.AIExecutionStrategies.Movement
 
             List<PathNode> nodesInRange = rangeStrategy.GetNodesInRange(currentUnit.Position);
 
-            if(nodesInRange.Count == 0) return false;
+            if (nodesInRange.Count == 0) return false;
 
             PathNode farthestNode = CalculateFarthestNode(nodesInRange, currentUnit);
             
