@@ -171,6 +171,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8418042228796421702, guid: 5351262804d27324d8b07fb939aa83fb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5058770562342259116}
+    - targetCorrespondingSourceObject: {fileID: 8418042228796421702, guid: 5351262804d27324d8b07fb939aa83fb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2813786054990095467}
   m_SourcePrefab: {fileID: 100100000, guid: 5351262804d27324d8b07fb939aa83fb, type: 3}
 --- !u!224 &1634948620013800590 stripped
 RectTransform:
@@ -194,6 +197,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c33f60b63ecc066478e7ceaee83a5a55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseScreen
+--- !u!114 &2813786054990095467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7506868307469328460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5e952567fb5c6b40b82991ca0bf9169, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pom.Core.PlayerDisabler
 --- !u!1001 &2640782664284896783
 PrefabInstance:
   m_ObjectHideFlags: 0

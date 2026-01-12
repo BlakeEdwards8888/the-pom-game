@@ -10,7 +10,6 @@ namespace Pom.Dialogue
     public class DialogueBox : MonoBehaviour
     {
         [Header("Settings")]
-        //[SerializeField] List<string> dialogues = new List<string> ();
         [SerializeField] float typeRate;
 
         [Header("References")]
@@ -52,11 +51,28 @@ namespace Pom.Dialogue
         {
             textBox.text = "";
             char[] dialogueArray = dialogue.ToCharArray();
+            float localTypeRate = typeRate;
 
-            foreach (char c in dialogueArray)
+            for(int i = 0; i < dialogueArray.Length; i++)
             {
-                textBox.text += c;
-                yield return new WaitForSeconds(char.IsWhiteSpace(c) ? 0 : typeRate);
+                if (dialogueArray[i] == '<')
+                {
+                    string formattingString = "<";
+
+                    for(int j = i + 1; j < dialogueArray.Length; j++)
+                    {
+                        formattingString += dialogueArray[j];
+                        if(dialogueArray[j] == '>')
+                        {
+                            textBox.text += formattingString;
+                            i = j + 1;
+                            break;
+                        }
+                    }
+                }
+
+                textBox.text += dialogueArray[i];
+                yield return new WaitForSecondsRealtime(char.IsWhiteSpace(dialogueArray[i]) ? 0 : typeRate);
             }
 
             currentCoroutine = null;

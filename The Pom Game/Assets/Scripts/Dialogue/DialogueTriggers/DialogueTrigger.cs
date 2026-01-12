@@ -2,20 +2,12 @@ using Pom.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Pom.Dialogue
+namespace Pom.Dialogue.DialogueTriggers
 {
     public class DialogueTrigger : MonoBehaviour
     {
         [SerializeField] DialogueBox dialogueBox;
         [SerializeField] DialogueConfig dialogueConfig;
-
-        private void Update()
-        {
-            if (Keyboard.current.spaceKey.wasPressedThisFrame)
-            {
-                TriggerDialogue();
-            }
-        }
 
         public void TriggerDialogue()
         {

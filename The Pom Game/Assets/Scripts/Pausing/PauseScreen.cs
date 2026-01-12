@@ -8,13 +8,11 @@ namespace Pom.Pausing
     {
         private void OnEnable()
         {
-            PlayerController.Instance.enabled = false;
             Time.timeScale = 0;
         }
 
         private void OnDisable()
         {
-            PlayerController.Instance.enabled = true;
             Time.timeScale = 1;
         }
     }
