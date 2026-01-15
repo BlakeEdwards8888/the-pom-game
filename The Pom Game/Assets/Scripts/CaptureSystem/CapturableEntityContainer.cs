@@ -1,11 +1,14 @@
 using Pom.CharacterActions.Capturing;
 using Pom.Control;
+using Pom.Navigation;
+using Pom.UndoSystem;
 using Pom.Units;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Pom.CaptureSystem
 {
-    public class CapturableEntityContainer : MonoBehaviour
+    public class CapturableEntityContainer : MonoBehaviour, ICacheable
     {
         [SerializeField] CapturableEntity inanimateState;
         [SerializeField] Unit capturedState;
@@ -23,6 +26,10 @@ namespace Pom.CaptureSystem
             inanimateState.gameObject.SetActive(!isCaptured);
             capturedState.gameObject.SetActive(isCaptured);
 
+            inanimateState.transform.position = capturedState.transform.position;
+
+            if (OccupyingUnit == null) return;
+
             OccupyingUnit.gameObject.SetActive(!isCaptured);
 
             Controller alliedController = Controller.GetControllerByFaction(OccupyingUnit.Alliance.AlliedFaction);
@@ -33,8 +40,6 @@ namespace Pom.CaptureSystem
                 activeController = alliedController;
                 activeController.onTurnStarted += HandleTurnStarted;
             }
-
-            inanimateState.transform.position = capturedState.transform.position;
 
             activeController.SetActiveUnit(isCaptured ? capturedState : OccupyingUnit);
         }
@@ -80,6 +85,26 @@ namespace Pom.CaptureSystem
         private void OnDisable()
         {
             inanimateState.onCaptured -= HandleCaptured;
+        }
+
+        public object CaptureState()
+        {
+            Dictionary<string, object> state = new Dictionary<string, object>();
+
+            state["position"] = (Vector2)transform.position;
+            state["is_captured"] = capturedState.gameObject.activeSelf;
+            state["occupying_unit"] = OccupyingUnit;
+
+            return state;
+        }
+
+        public void RestoreState(object state)
+        {
+            Dictionary<string, object> localState = state as Dictionary<string, object>;
+
+            transform.position = GridSystem.Instance.GetGridPosition((Vector2)localState["position"]);
+            SwitchState((bool)localState["is_captured"]);
+            OccupyingUnit = (Unit)localState["occupying_unit"];
         }
     }
 }

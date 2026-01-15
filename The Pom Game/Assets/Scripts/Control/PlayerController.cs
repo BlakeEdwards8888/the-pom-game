@@ -1,15 +1,17 @@
 using Pom.CharacterActions;
 using Pom.Navigation;
 using Pom.Navigation.Presentation;
+using Pom.UndoSystem;
 using Pom.Units;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace Pom.Control
 {
-    public class PlayerController : Controller
+    public class PlayerController : Controller, ICacheable
     {
         public enum PlayerState
         {
@@ -31,6 +33,15 @@ namespace Pom.Control
         }
 
         static PlayerController _instance;
+
+        public BoardStateCache BoardStateCache 
+        { 
+            get
+            {
+                return GetComponent<BoardStateCache>();
+            }
+            private set { }
+        }
 
         RangePresenter rangePresenter => GetComponent<RangePresenter>();
         Unit activeUnit;
@@ -89,14 +100,13 @@ namespace Pom.Control
                 Vector2 mouseGridPosition = GetMouseGridPosition();
                 ActionExecutor usingAction = activeAction;
                 SetActiveAction(null);
+                BoardStateCache.CaptureState();
                 usingAction.TryExecute(mouseGridPosition, actionArgs, RaiseActionCompleted);
             }
         }
 
         public void SetActiveAction(ActionExecutor action)
         {
-            if (action == activeAction) return;
-
             activeAction = action;
 
             if(activeAction == null || activeAction.IsUsed)
@@ -145,6 +155,24 @@ namespace Pom.Control
             activeUnit = unit;
             SetActiveAction(unit.Actions[0]);
             onUnitSelected?.Invoke(activeUnit);
+        }
+
+        public object CaptureState()
+        {
+            Dictionary<string, object> state = new Dictionary<string, object>();
+
+            state["active_unit"] = activeUnit;
+            state["active_action"] = activeAction;
+
+            return state;
+        }
+
+        public void RestoreState(object state)
+        {
+            Dictionary<string, object> localState = state as Dictionary<string, object>;
+
+            SetActiveUnit((Unit)localState["active_unit"]);
+            SetActiveAction((ActionExecutor)localState["active_action"]);
         }
     }
 }

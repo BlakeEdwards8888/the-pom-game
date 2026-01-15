@@ -101,6 +101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8465574107386630694}
   - component: {fileID: 442973361507869485}
+  - component: {fileID: 4946311114497258372}
   m_Layer: 7
   m_Name: CapturableEntity
   m_TagString: Untagged
@@ -138,3 +139,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Pom.CaptureSystem.CapturableEntityContainer
   inanimateState: {fileID: 2292686395365283024}
   capturedState: {fileID: 0}
+--- !u!114 &4946311114497258372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5944979055680795526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2015b3a62b0fe545a1fda089b9b6544, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pom.UndoSystem.CacheableEntity

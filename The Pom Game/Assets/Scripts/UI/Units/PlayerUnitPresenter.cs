@@ -23,15 +23,22 @@ namespace Pom.UI.Units
             playerController = PlayerController.Instance;
 
             playerController.onUnitSelected += HandleUnitSelected;
+            playerController.BoardStateCache.onStateRestored += RefreshUI;
         }
 
         private void HandleUnitSelected(Unit unit)
         {
-            if(this.unit != null) this.unit.Health.onTakeDamage.AddListener(HandleTakeDamage);
+            if (this.unit != null) this.unit.Health.onTakeDamage.AddListener(HandleTakeDamage);
 
             this.unit = unit;
             namePresenter.text = unit.DisplayName;
             unit.Health.onTakeDamage.AddListener(HandleTakeDamage);
+            
+            RefreshUI();
+        }
+
+        void RefreshUI()
+        {
             UpdateHealthText();
 
             for (int i = actionButtonContainer.childCount - 1; i >= 0; i--)
@@ -69,6 +76,7 @@ namespace Pom.UI.Units
         private void OnDisable()
         {
             playerController.onUnitSelected -= HandleUnitSelected;
+            playerController.BoardStateCache.onStateRestored -= RefreshUI;
             unit.Health.onTakeDamage.RemoveListener(HandleTakeDamage);
         }
     }

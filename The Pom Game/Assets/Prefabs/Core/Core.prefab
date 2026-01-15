@@ -715,6 +715,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7080529458878471248}
   - component: {fileID: 1947822953187083332}
+  - component: {fileID: 4634355037404745195}
   m_Layer: 0
   m_Name: ObjectivesList
   m_TagString: Untagged
@@ -752,6 +753,18 @@ MonoBehaviour:
   victoryScreen: {fileID: 5994730938892275042}
   failureScreen: {fileID: 1899049264225946330}
   <Objectives>k__BackingField: []
+--- !u!114 &4634355037404745195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6841796907789416931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2015b3a62b0fe545a1fda089b9b6544, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pom.UndoSystem.CacheableEntity
 --- !u!1 &7606665936254379810
 GameObject:
   m_ObjectHideFlags: 0
@@ -894,13 +907,45 @@ PrefabInstance:
     m_TransformParent: {fileID: 613487474561780710}
     m_Modifications:
     - target: {fileID: 131373908372576393, guid: a591b13c6a971a94ab01d884f0ec5ee8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 131373908372576393, guid: a591b13c6a971a94ab01d884f0ec5ee8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 131373908372576393, guid: a591b13c6a971a94ab01d884f0ec5ee8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 541699060157773015}
+    - target: {fileID: 131373908372576393, guid: a591b13c6a971a94ab01d884f0ec5ee8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 505461160916927429}
+    - target: {fileID: 131373908372576393, guid: a591b13c6a971a94ab01d884f0ec5ee8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 131373908372576393, guid: a591b13c6a971a94ab01d884f0ec5ee8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ClearStateStack
+      objectReference: {fileID: 0}
+    - target: {fileID: 131373908372576393, guid: a591b13c6a971a94ab01d884f0ec5ee8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: Pom.UndoSystem.BoardStateCache, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 131373908372576393, guid: a591b13c6a971a94ab01d884f0ec5ee8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 798335736146211734, guid: a591b13c6a971a94ab01d884f0ec5ee8, type: 3}
       propertyPath: m_Name
       value: GUI Container
       objectReference: {fileID: 0}
+    - target: {fileID: 5485422305713906755, guid: a591b13c6a971a94ab01d884f0ec5ee8, type: 3}
+      propertyPath: boardStateCache
+      value: 
+      objectReference: {fileID: 505461160916927429}
     - target: {fileID: 6803734696977129663, guid: a591b13c6a971a94ab01d884f0ec5ee8, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -981,6 +1026,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7192881094484189467, guid: a591b13c6a971a94ab01d884f0ec5ee8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 505461160916927429}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1385,6 +1434,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad2e8a5cfeeaf554fa7c702c7b5f5484, type: 3}
+--- !u!114 &505461160916927429 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4121258558046715518, guid: ad2e8a5cfeeaf554fa7c702c7b5f5484, type: 3}
+  m_PrefabInstance: {fileID: 4481755551677316539}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a26d753a837181f41b53a6a6fbab4ed0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pom.UndoSystem.BoardStateCache
 --- !u!114 &1462457195270065825 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3060712716669104922, guid: ad2e8a5cfeeaf554fa7c702c7b5f5484, type: 3}

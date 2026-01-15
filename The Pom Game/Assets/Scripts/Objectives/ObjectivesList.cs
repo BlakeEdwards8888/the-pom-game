@@ -1,12 +1,13 @@
 using Pom.TurnSystem;
 using Pom.UI;
+using Pom.UndoSystem;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Pom.Objectives
 {
-    public class ObjectivesList : MonoBehaviour
+    public class ObjectivesList : MonoBehaviour, ICacheable
     {
         public static ObjectivesList Instance
         {
@@ -122,5 +123,26 @@ namespace Pom.Objectives
             turnShifter.onFinalRoundComplete -= HandleFinalRoundComplete;
         }
 
+        public object CaptureState()
+        {
+            Dictionary<string, ObjectiveState> state = new Dictionary<string, ObjectiveState>();
+
+            foreach(Objective objective in Objectives)
+            {
+                state[objective.Tag] = objective.State;
+            }
+
+            return state;
+        }
+
+        public void RestoreState(object state)
+        {
+            Dictionary<string, ObjectiveState> localState = state as Dictionary<string, ObjectiveState>;
+
+            foreach(KeyValuePair<string, ObjectiveState> kvp in localState)
+            {
+                objectiveDict[kvp.Key].SetState(kvp.Value);
+            }
+        }
     }
 }
