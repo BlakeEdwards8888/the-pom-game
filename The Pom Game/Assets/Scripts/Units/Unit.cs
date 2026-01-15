@@ -8,10 +8,11 @@ using System.Collections.Generic;
 using Pom.CharacterActions;
 using Pom.CharacterActions.AIExecutionStrategies;
 using System;
+using Pom.UndoSystem;
 
 namespace Pom.Units
 {
-    public class Unit : MonoBehaviour
+    public class Unit : MonoBehaviour, ICacheable
     {
         [field: SerializeField] public Health Health { get; private set; }
         [field: SerializeField] public string DisplayName { get; private set; }
@@ -45,6 +46,16 @@ namespace Pom.Units
             }
 
             return null;
+        }
+
+        public object CaptureState()
+        {
+            return gameObject.activeSelf;
+        }
+
+        public void RestoreState(object state)
+        {
+            gameObject.SetActive((bool)state);
         }
     }
 }

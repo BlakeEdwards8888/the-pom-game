@@ -1,13 +1,14 @@
 using Pom.CharacterActions.AIExecutionStrategies;
 using Pom.CharacterActions.RangeHandling;
 using Pom.Navigation;
+using Pom.UndoSystem;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Pom.CharacterActions
 {
-    public abstract class ActionExecutor : MonoBehaviour
+    public abstract class ActionExecutor : MonoBehaviour, ICacheable
     {
         [field: SerializeField] public RangeStrategy RangeStrategy { get; private set; }
         [field: SerializeField] public ExecutionStrategy AIExecutionStrategy { get; private set; }
@@ -45,5 +46,15 @@ namespace Pom.CharacterActions
         }
 
         public abstract string GetDisplayName();
+
+        public virtual object CaptureState()
+        {
+            return IsUsed;
+        }
+
+        public virtual void RestoreState(object state)
+        {
+            IsUsed = (bool)state;
+        }
     }
 }

@@ -62,6 +62,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5766771390115483352, guid: a4c6e790d65c6c043a97ad2a01e9af56, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3972722718361873910}
+    - targetCorrespondingSourceObject: {fileID: 5766771390115483352, guid: a4c6e790d65c6c043a97ad2a01e9af56, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4121258558046715518}
+    - targetCorrespondingSourceObject: {fileID: 5766771390115483352, guid: a4c6e790d65c6c043a97ad2a01e9af56, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2376630816073982885}
   m_SourcePrefab: {fileID: 100100000, guid: a4c6e790d65c6c043a97ad2a01e9af56, type: 3}
 --- !u!1 &8704863402883612729 stripped
 GameObject:
@@ -80,6 +86,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77cd83013372de04fbe2a329500b7440, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionArgs: []
+  onUnitsCleared:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &3972722718361873910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,3 +102,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a928fb93585aa634885f57ccf5a017ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4121258558046715518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8704863402883612729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a26d753a837181f41b53a6a6fbab4ed0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pom.UndoSystem.BoardStateCache
+--- !u!114 &2376630816073982885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8704863402883612729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2015b3a62b0fe545a1fda089b9b6544, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pom.UndoSystem.CacheableEntity

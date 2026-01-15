@@ -1,10 +1,11 @@
+using Pom.UndoSystem;
 using System;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Pom.Attributes
 {
-    public class Health : MonoBehaviour
+    public class Health : MonoBehaviour, ICacheable
     {
         [field: SerializeField] public int StartingHealth { get; private set; }
 
@@ -28,9 +29,18 @@ namespace Pom.Attributes
             if(CurrentHealth == 0)
             {
                 onDeath?.Invoke();
-                onDeath.RemoveAllListeners();
-                Destroy(gameObject);
+                gameObject.SetActive(false);
             }
+        }
+
+        public object CaptureState()
+        {
+            return CurrentHealth;
+        }
+
+        public void RestoreState(object state)
+        {
+            CurrentHealth = (int)state;
         }
     }
 }
