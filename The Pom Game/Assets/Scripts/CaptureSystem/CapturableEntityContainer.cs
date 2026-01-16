@@ -103,8 +103,8 @@ namespace Pom.CaptureSystem
             Dictionary<string, object> localState = state as Dictionary<string, object>;
 
             transform.position = GridSystem.Instance.GetGridPosition((Vector2)localState["position"]);
-            SwitchState((bool)localState["is_captured"]);
             OccupyingUnit = (Unit)localState["occupying_unit"];
+            SwitchState((bool)localState["is_captured"]);
         }
     }
 }
