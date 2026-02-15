@@ -1,7 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Pom.AnimationHandling.ScriptableObjects;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UIElements.Experimental;
 
 namespace Pom.AnimationHandling
 {
@@ -16,8 +20,10 @@ namespace Pom.AnimationHandling
 
         Dictionary<string, object> stateContext = new Dictionary<string, object>();
 
-        public void Enter() 
+        public void Enter((string key, object value)? stateArgs)
         { 
+            if(stateArgs != null) stateContext[stateArgs?.key] = stateArgs?.value;
+
             stateSO.Enter(stateMachine, ref stateContext); 
         }
 

@@ -1,13 +1,17 @@
+using Pom.AnimationHandling;
 using Pom.CaptureSystem;
 using Pom.Navigation;
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Pom.CharacterActions.Capturing
 {
     public class Capturer : ActionExecutor
     {
+        AnimationStateMachine animationStateMachine => GetComponent<AnimationStateMachine>();
+        
         public override string GetDisplayName()
         {
             return "Capture";
@@ -34,8 +38,22 @@ namespace Pom.CharacterActions.Capturing
 
             CapturableEntity capturableEntity = args as CapturableEntity;
 
-            Capture(capturableEntity);
-            finished?.Invoke();
+            Vector2 direction = CalculateDirection(capturableEntity);
+            animationStateMachine.SwitchState(AnimationTag.Capture, ("direction", direction));
+
+            animationStateMachine.onCurrentAnimationFinished += () =>
+            {
+                Capture(capturableEntity);
+                finished?.Invoke();
+            };
+        }
+
+        private Vector2 CalculateDirection(CapturableEntity capturableEntity)
+        {
+            Vector2 currentGridPosition = GridSystem.Instance.GetGridPosition(transform.position);
+            Vector2 capturableEntityGridPosition = GridSystem.Instance.GetGridPosition(capturableEntity.transform.position);
+
+            return GridSystem.GetDirection(currentGridPosition, capturableEntityGridPosition);
         }
     }
 }

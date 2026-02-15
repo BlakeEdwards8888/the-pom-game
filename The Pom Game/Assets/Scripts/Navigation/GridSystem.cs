@@ -127,5 +127,10 @@ namespace Pom.Navigation
 
             return xDistance + yDistance;
         }
+
+        public static Vector2 GetDirection(Vector2 origin, Vector2 destination)
+        {
+            return (destination - origin).normalized;
+        }
     }
 }

@@ -16,4 +16,4 @@ MonoBehaviour:
   - Idle 1
   - Idle 2
   - Idle 3
-  loopsPerTwitchRange: {x: 5, y: 10}
+  loopsPerTwitchRange: {x: 10, y: 20}

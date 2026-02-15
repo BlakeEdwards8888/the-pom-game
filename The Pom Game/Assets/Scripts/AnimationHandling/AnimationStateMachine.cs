@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Pom.AnimationHandling
 {
@@ -7,10 +9,13 @@ namespace Pom.AnimationHandling
     {
         [field:SerializeField] public Animator Animator {get; private set;}
 
+        [Tooltip("Whichever state is set to the first element will be considered the 'default state' ")]
         [SerializeField] AnimationState[] animationStates;
         Dictionary<AnimationTag, AnimationState> stateDict;
 
         AnimationState currentState;
+
+        public event Action onCurrentAnimationFinished;
 
         void Start()
         {
@@ -27,8 +32,10 @@ namespace Pom.AnimationHandling
             SwitchState(animationStates[0].Tag);
         }
 
-        public void SwitchState(AnimationTag tag)
+        public void SwitchState(AnimationTag tag, (string key, object value)? stateArgs = null)
         {
+            Debug.Log($"Switching state to {tag}");
+
             if(stateDict == null) BuildStateDict();
 
             if (!stateDict.ContainsKey(tag))
@@ -39,7 +46,10 @@ namespace Pom.AnimationHandling
 
             currentState?.Exit();
             currentState = stateDict[tag];
-            currentState.Enter();
+            currentState.Enter(stateArgs);
+
+            onCurrentAnimationFinished?.Invoke();
+            onCurrentAnimationFinished = null;
         }
 
         void BuildStateDict()

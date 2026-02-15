@@ -8,6 +8,7 @@ public enum AnimationTag
     Death,
     Hit,
     Pause,
-    Twitch
+    Twitch,
+    Capture
 }
 }

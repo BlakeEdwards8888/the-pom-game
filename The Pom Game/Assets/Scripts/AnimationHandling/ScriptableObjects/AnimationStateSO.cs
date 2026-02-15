@@ -7,7 +7,7 @@ namespace Pom.AnimationHandling.ScriptableObjects
     [CreateAssetMenu(fileName = "New Animation State SO", menuName = "Animation States/Default State SO")]
     public class AnimationStateSO : ScriptableObject
     {
-        [SerializeField] string[] animations;
+        [SerializeField] protected string[] animations;
 
         public virtual void Enter(AnimationStateMachine stateMachine, ref Dictionary<string, object> context)
         {
