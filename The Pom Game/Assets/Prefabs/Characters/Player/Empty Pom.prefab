@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 4ec2c14fcd316014a868eb6380d905e2, type: 2}
     - target: {fileID: 1219137602538619436, guid: 3d55790cac0901549a28ceb82747daf6, type: 3}
       propertyPath: <StartingHealth>k__BackingField
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1219137602538619436, guid: 3d55790cac0901549a28ceb82747daf6, type: 3}
       propertyPath: onDeath.m_PersistentCalls.m_Calls.Array.size
@@ -134,7 +134,7 @@ PrefabInstance:
       objectReference: {fileID: 6648425336924503142}
     - target: {fileID: 6915374055958977433, guid: 3d55790cac0901549a28ceb82747daf6, type: 3}
       propertyPath: animationStates.Array.size
-      value: 3
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6915374055958977433, guid: 3d55790cac0901549a28ceb82747daf6, type: 3}
       propertyPath: animationMappings.Array.size
@@ -169,6 +169,22 @@ PrefabInstance:
       value: Twitch
       objectReference: {fileID: 0}
     - target: {fileID: 6915374055958977433, guid: 3d55790cac0901549a28ceb82747daf6, type: 3}
+      propertyPath: animationStates.Array.data[3].label
+      value: Capture
+      objectReference: {fileID: 0}
+    - target: {fileID: 6915374055958977433, guid: 3d55790cac0901549a28ceb82747daf6, type: 3}
+      propertyPath: animationStates.Array.data[4].label
+      value: Death
+      objectReference: {fileID: 0}
+    - target: {fileID: 6915374055958977433, guid: 3d55790cac0901549a28ceb82747daf6, type: 3}
+      propertyPath: animationStates.Array.data[5].label
+      value: Hit
+      objectReference: {fileID: 0}
+    - target: {fileID: 6915374055958977433, guid: 3d55790cac0901549a28ceb82747daf6, type: 3}
+      propertyPath: animationStates.Array.data[6].label
+      value: Pause
+      objectReference: {fileID: 0}
+    - target: {fileID: 6915374055958977433, guid: 3d55790cac0901549a28ceb82747daf6, type: 3}
       propertyPath: animationMappings.Array.data[0].label
       value: Idle
       objectReference: {fileID: 0}
@@ -193,6 +209,22 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: f7c75836d7df8a44aaef40248ace794b, type: 2}
     - target: {fileID: 6915374055958977433, guid: 3d55790cac0901549a28ceb82747daf6, type: 3}
+      propertyPath: animationStates.Array.data[3].stateSO
+      value: 
+      objectReference: {fileID: 11400000, guid: bd69a29004fafd04fa9c063be9999e7f, type: 2}
+    - target: {fileID: 6915374055958977433, guid: 3d55790cac0901549a28ceb82747daf6, type: 3}
+      propertyPath: animationStates.Array.data[4].stateSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 90c3f25fc96ae684583946ff8fa7b8a4, type: 2}
+    - target: {fileID: 6915374055958977433, guid: 3d55790cac0901549a28ceb82747daf6, type: 3}
+      propertyPath: animationStates.Array.data[5].stateSO
+      value: 
+      objectReference: {fileID: 11400000, guid: ecf7a058aee166d40b018c13b5e2fcde, type: 2}
+    - target: {fileID: 6915374055958977433, guid: 3d55790cac0901549a28ceb82747daf6, type: 3}
+      propertyPath: animationStates.Array.data[6].stateSO
+      value: 
+      objectReference: {fileID: 11400000, guid: d1c97128c80ab7844a433dcf37c0046c, type: 2}
+    - target: {fileID: 6915374055958977433, guid: 3d55790cac0901549a28ceb82747daf6, type: 3}
       propertyPath: animationStates.Array.data[0].stateMachine
       value: 
       objectReference: {fileID: 7835691178222862130}
@@ -205,12 +237,44 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7835691178222862130}
     - target: {fileID: 6915374055958977433, guid: 3d55790cac0901549a28ceb82747daf6, type: 3}
+      propertyPath: animationStates.Array.data[3].stateMachine
+      value: 
+      objectReference: {fileID: 7835691178222862130}
+    - target: {fileID: 6915374055958977433, guid: 3d55790cac0901549a28ceb82747daf6, type: 3}
+      propertyPath: animationStates.Array.data[4].stateMachine
+      value: 
+      objectReference: {fileID: 7835691178222862130}
+    - target: {fileID: 6915374055958977433, guid: 3d55790cac0901549a28ceb82747daf6, type: 3}
+      propertyPath: animationStates.Array.data[5].stateMachine
+      value: 
+      objectReference: {fileID: 7835691178222862130}
+    - target: {fileID: 6915374055958977433, guid: 3d55790cac0901549a28ceb82747daf6, type: 3}
+      propertyPath: animationStates.Array.data[6].stateMachine
+      value: 
+      objectReference: {fileID: 7835691178222862130}
+    - target: {fileID: 6915374055958977433, guid: 3d55790cac0901549a28ceb82747daf6, type: 3}
       propertyPath: animationStates.Array.data[0].<Tag>k__BackingField
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6915374055958977433, guid: 3d55790cac0901549a28ceb82747daf6, type: 3}
       propertyPath: animationStates.Array.data[2].<Tag>k__BackingField
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6915374055958977433, guid: 3d55790cac0901549a28ceb82747daf6, type: 3}
+      propertyPath: animationStates.Array.data[3].<Tag>k__BackingField
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6915374055958977433, guid: 3d55790cac0901549a28ceb82747daf6, type: 3}
+      propertyPath: animationStates.Array.data[4].<Tag>k__BackingField
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6915374055958977433, guid: 3d55790cac0901549a28ceb82747daf6, type: 3}
+      propertyPath: animationStates.Array.data[5].<Tag>k__BackingField
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6915374055958977433, guid: 3d55790cac0901549a28ceb82747daf6, type: 3}
+      propertyPath: animationStates.Array.data[6].<Tag>k__BackingField
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6915374055958977433, guid: 3d55790cac0901549a28ceb82747daf6, type: 3}
       propertyPath: animationStates.Array.data[0].Animations.Array.size

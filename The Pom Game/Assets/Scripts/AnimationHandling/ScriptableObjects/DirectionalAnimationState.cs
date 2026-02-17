@@ -5,23 +5,13 @@ using UnityEngine;
 namespace Pom.AnimationHandling.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "New Directional Animation State", menuName = "Animation States/Directional State")]
-    public class DirectionalAnimationState : AnimationStateSO
+    public class DirectionalAnimationState : OneShotAnimationState
     {
-        [Tooltip("This is the actual tag indicated in the Animator component")]
-        [SerializeField] string animationTag;
-
         public override void Enter(AnimationStateMachine stateMachine, ref Dictionary<string, object> context)
         {
             Vector2 direction = (Vector2)context["direction"];
 
             stateMachine.Animator.Play(GetDirectionalAnimation(direction, stateMachine));
-        }
-
-        public override void Execute(AnimationStateMachine stateMachine, ref Dictionary<string, object> context)
-        {
-            AnimatorStateInfo currentAnimatorStateInfo = stateMachine.Animator.GetCurrentAnimatorStateInfo(0);
-            
-            if(currentAnimatorStateInfo.IsTag(animationTag) && currentAnimatorStateInfo.normalizedTime >= 1) stateMachine.ReturnToDefaultState();
         }
 
         private string GetDirectionalAnimation(Vector2 direction, AnimationStateMachine stateMachine)
