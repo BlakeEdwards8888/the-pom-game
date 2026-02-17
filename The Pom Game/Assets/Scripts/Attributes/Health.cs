@@ -1,6 +1,7 @@
 using Pom.AnimationHandling;
 using Pom.UndoSystem;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -51,8 +52,13 @@ namespace Pom.Attributes
 
         private void Die()
         {
-            animationStateMachine.SwitchState(AnimationTag.Death);
-            animationStateMachine.onCurrentAnimationFinished += () => { gameObject.SetActive(false); };
+            Action animationFinished = () => { gameObject.SetActive(false); };
+
+            Dictionary<string, object> animationStateContext = new Dictionary<string, object>();
+            animationStateContext["finished"] = animationFinished;
+
+            animationStateMachine.SwitchState(AnimationTag.Death, animationStateContext);
+
             onDeath?.Invoke();
         }
 

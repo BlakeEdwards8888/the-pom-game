@@ -21,6 +21,12 @@ namespace Pom.Control
 
         public UnityEvent onUnitsCleared;
 
+
+        void Start()
+        {
+            FindControllableUnits();
+        }
+
         public virtual void InitiateTurn()
         {
             FindControllableUnits();

@@ -39,13 +39,18 @@ namespace Pom.CharacterActions.Capturing
             CapturableEntity capturableEntity = args as CapturableEntity;
 
             Vector2 direction = CalculateDirection(capturableEntity);
-            animationStateMachine.SwitchState(AnimationTag.Capture, ("direction", direction));
 
-            animationStateMachine.onCurrentAnimationFinished += () =>
+            Action animationFinished = () =>
             {
                 Capture(capturableEntity);
                 finished?.Invoke();
             };
+
+            Dictionary<string, object> animationStateContext = new Dictionary<string, object>();
+            animationStateContext["direction"] = direction;
+            animationStateContext["finished"] = animationFinished;
+
+            animationStateMachine.SwitchState(AnimationTag.Capture, animationStateContext);
         }
 
         private Vector2 CalculateDirection(CapturableEntity capturableEntity)

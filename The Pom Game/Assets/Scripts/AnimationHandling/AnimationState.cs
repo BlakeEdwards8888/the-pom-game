@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Xml;
 using Pom.AnimationHandling.ScriptableObjects;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -20,9 +21,9 @@ namespace Pom.AnimationHandling
 
         Dictionary<string, object> stateContext = new Dictionary<string, object>();
 
-        public void Enter((string key, object value)? stateArgs)
+        public void Enter(Dictionary<string, object> context)
         { 
-            if(stateArgs != null) stateContext[stateArgs?.key] = stateArgs?.value;
+            if(context != null) stateContext = context;
 
             stateSO.Enter(stateMachine, ref stateContext); 
         }

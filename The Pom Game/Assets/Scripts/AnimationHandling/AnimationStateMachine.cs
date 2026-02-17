@@ -24,17 +24,21 @@ namespace Pom.AnimationHandling
 
         void Update()
         {
+            if(currentState == null) return;
+
             currentState.Execute();
         }
 
         public void ReturnToDefaultState()
         {
+            if(animationStates.Length == 0) return;
+            
             SwitchState(animationStates[0].Tag);
         }
 
-        public void SwitchState(AnimationTag tag, (string key, object value)? stateArgs = null)
+        public void SwitchState(AnimationTag tag, Dictionary<string, object> context = null)
         {
-            Debug.Log($"Switching state to {tag}");
+            if(animationStates.Length == 0) return;
 
             if(stateDict == null) BuildStateDict();
 
@@ -46,7 +50,7 @@ namespace Pom.AnimationHandling
 
             currentState?.Exit();
             currentState = stateDict[tag];
-            currentState.Enter(stateArgs);
+            currentState.Enter(context);
 
             onCurrentAnimationFinished?.Invoke();
             onCurrentAnimationFinished = null;
