@@ -1,3 +1,4 @@
+using Pom.AnimationHandling;
 using Pom.Navigation;
 using Pom.UndoSystem;
 using System;
@@ -15,6 +16,7 @@ namespace Pom.CharacterActions.Movement
         [SerializeField] float moveSpeed;
 
         PathFinder pathFinder => GetComponent<PathFinder>();
+        AnimationStateMachine animationStateMachine => GetComponent<AnimationStateMachine>();
 
         public override string GetDisplayName()
         {
@@ -72,6 +74,10 @@ namespace Pom.CharacterActions.Movement
             List<PathNode> path = pathFinder.GetPath(currentGridPosition, targetPosition, GetRange(), rangeOverflowMode);
 
             if (path == null) return false;
+
+            animationStateMachine.SwitchState(AnimationTag.Move);
+
+            finished += animationStateMachine.ReturnToDefaultState;
 
             Execute(path, finished);
 

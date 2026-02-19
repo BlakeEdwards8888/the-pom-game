@@ -17,6 +17,7 @@ namespace Pom.Units
         [field: SerializeField] public Health Health { get; private set; }
         [field: SerializeField] public string DisplayName { get; private set; }
         [field: SerializeField] public Alliance Alliance { get; private set; }
+        [Tooltip("Actions are listed in the order set here, and the first element will be the default action which")]
         [field: SerializeField] public List<ActionExecutor> Actions { get; private set; }
 
         public Vector2 Position

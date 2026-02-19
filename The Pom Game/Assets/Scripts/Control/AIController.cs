@@ -41,15 +41,16 @@ namespace Pom.Control
             ActionExecutor activeAction = currentUnit.Actions[actionIndex];
 
             if(activeAction.AIExecutionStrategy.TryGetTargetPosition(currentUnit, out Vector2 targetPosition, activeAction.RangeStrategy))
-
-            if(currentUnit.Actions[actionIndex].TryExecute(targetPosition, actionArgs,
-                () => {
-                    RaiseActionCompleted();
-                    IterateActionIndex();
-                    ExecuteNextAction(); 
-                }))
             {
-                    return;
+                if(currentUnit.Actions[actionIndex].TryExecute(targetPosition, actionArgs,
+                    () => {
+                        RaiseActionCompleted();
+                        IterateActionIndex();
+                        ExecuteNextAction(); 
+                    }))
+                {
+                        return;
+                }
             }
 
             IterateActionIndex();
