@@ -2877,7 +2877,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cd906d533c29c0429047b81865fd800, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pom.UI.UndoSystem.UndoPresenter
-  boardStateCache: {fileID: 0}
+  boardStateCache: {fileID: 505461160916927429}
   undoButton: {fileID: 5023889628975639584}
 --- !u!1 &4961090586801524169
 GameObject:
@@ -4385,9 +4385,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Pom.TurnSystem.TurnShifter, Assembly-CSharp
-        m_MethodName: ShiftTurns
+      - m_Target: {fileID: 1462457195270065825}
+        m_TargetAssemblyTypeName: Pom.Control.PlayerController, Assembly-CSharp
+        m_MethodName: ClearActiveUnit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4397,9 +4397,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Pom.UndoSystem.BoardStateCache, Assembly-CSharp
-        m_MethodName: ClearStateStack
+      - m_Target: {fileID: 541699060157773015}
+        m_TargetAssemblyTypeName: Pom.TurnSystem.TurnShifter, Assembly-CSharp
+        m_MethodName: ShiftTurns
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5043,7 +5043,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 505461160916927429}
         m_TargetAssemblyTypeName: Pom.UndoSystem.BoardStateCache, Assembly-CSharp
         m_MethodName: RestoreState
         m_Mode: 1

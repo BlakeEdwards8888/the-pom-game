@@ -12,6 +12,8 @@ namespace Pom.AnimationHandling.ScriptableObjects
 
         public virtual void Enter(AnimationStateMachine stateMachine, ref Dictionary<string, object> context)
         {
+            if(!stateMachine.gameObject.activeInHierarchy) return;
+
             int randomValue = UnityEngine.Random.Range(0, animations.Length);
 
             stateMachine.Animator.Play(animations[randomValue]);
