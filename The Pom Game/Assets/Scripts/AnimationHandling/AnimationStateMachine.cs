@@ -38,7 +38,15 @@ namespace Pom.AnimationHandling
 
         public void SwitchState(AnimationTag tag, Dictionary<string, object> context = null)
         {
-            if(animationStates.Length == 0) return;
+            if(animationStates.Length == 0)
+            {
+                if(context == null) return;
+                if(!context.ContainsKey("finished")) return;
+
+                Action finished = context["finished"] as Action;
+                finished.Invoke();
+                return;
+            }
 
             if(stateDict == null) BuildStateDict();
 
