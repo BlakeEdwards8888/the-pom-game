@@ -47,6 +47,17 @@ namespace Pom.TurnSystem
 
         private void Start()
         {
+            Controller[] allControllers = FindObjectsByType<Controller>(FindObjectsSortMode.None);
+
+            foreach(Controller controller in allControllers)
+            {
+                if (!controllers.Contains(controller))
+                {
+                    Debug.LogWarning($"{controller.name} was not explicitly added to the controllers list, turn order will be inconsistent between instances");
+                    controllers.Add(controller);
+                }
+            }
+
             controllers[0].InitiateTurn();
         }
 

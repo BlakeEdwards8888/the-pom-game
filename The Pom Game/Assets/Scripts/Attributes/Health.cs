@@ -19,7 +19,7 @@ namespace Pom.Attributes
 
         AnimationStateMachine animationStateMachine => GetComponent<AnimationStateMachine>();
 
-        private void Start()
+        private void Awake()
         {
             CurrentHealth = StartingHealth;
         }
